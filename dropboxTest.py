@@ -6,7 +6,7 @@ from picamera import PiCamera
 
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN)
 
-file_path = strftime("%Y%m%d-%H%M%S")+"jpg"
+file_path = strftime("%Y%m%d-%H%M%S")+".jpg"
 
 camera = PiCamera()
 camera.resolution = (1024, 768)
