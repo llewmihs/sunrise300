@@ -31,6 +31,6 @@ for i in range(10):
     else:
         # file not found message
         print("File not found in the directory")
-    sleep(5)
+    sleep(2)
 
 camera.stop_preview()
