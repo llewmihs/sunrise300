@@ -1,4 +1,5 @@
 import dropbox
+import os
 from config import *
 from time import sleep
 from picamera import PiCamera
@@ -15,3 +16,14 @@ camera.stop_preview()
 
 with open("foo.jpg", "rb") as f:
     dbx.files_upload(f.read(), '/foo.jpg', mute = True)
+
+# getting the filename from the user
+file_path = "foo.jpg"
+
+# checking whether file exists or not
+if os.path.exists(file_path):
+    # removing the file using the os.remove() method
+    os.remove(file_path)
+else:
+    # file not found message
+    print("File not found in the directory")
