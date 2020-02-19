@@ -17,7 +17,7 @@ camera.capture(file_path)
 camera.stop_preview()
 
 with open(file_path, "rb") as f:
-    dbx.files_upload(f.read(), file_path, mute = True)
+    dbx.files_upload(f.read(), "/" + file_path, mute = True)
 
 # # getting the filename from the user
 # file_path = "foo.jpg"
