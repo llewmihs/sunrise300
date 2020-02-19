@@ -1,5 +1,7 @@
 from astral import LocationInfo
-city = LocationInfo("London", "England", "Europe/London", 51.5, -0.116)
+import datetime
+
+city = LocationInfo("Newcastle Upon Tyne", "England", "Europe/London", 51.5, -0.116)
 print((
     f"Information for {city.name}/{city.region}\n"
     f"Timezone: {city.timezone}\n"
