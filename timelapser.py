@@ -24,8 +24,6 @@ for i in range(20):
 subprocess.call("ls *.jpg > stills.txt", shell=True)
 subprocess.call("mencoder -nosound -ovc lavc -lavcopts vcodec=mpeg4:aspect=16/9:vbitrate=8000000 -vf scale=1920:1080 -o timelapse.avi -mf type=jpeg:fps=16 mf://@stills.txt",shell=True)
 
-print(output)
-
 subprocess.call("rm -r *.jpg", shell=True)
 
 with open("timelapse.avi", "rb") as f:
