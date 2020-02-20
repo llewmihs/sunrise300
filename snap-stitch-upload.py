@@ -9,7 +9,7 @@ from config import *
 
 #set up the camera
 camera = PiCamera()
-camera.resolution = (3280, 2464)
+camera.resolution = (1640, 1232)
 camera.start_preview()
 
 # Camera warm-up time
