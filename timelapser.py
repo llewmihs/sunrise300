@@ -8,7 +8,7 @@ from picamera import PiCamera
 
 #set up the camera
 camera = PiCamera()
-camera.resolution = (1024, 768)
+camera.resolution = (1920, 1080)
 camera.start_preview()
 
 # Camera warm-up time
