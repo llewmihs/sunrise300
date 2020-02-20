@@ -9,7 +9,7 @@ from config import *
 
 #set up the camera
 camera = PiCamera()
-camera.resolution = (1024, 768)
+camera.resolution = (3280, 2464)
 camera.start_preview()
 
 # Camera warm-up time
@@ -29,8 +29,10 @@ for filename in glob.glob('*.jpg'):
     height, width, layers = img.shape
     size = (width,height)
     img_array.append(img)
+
+vid_file = strftime("%Y%m%d-%H%M%S")+".avi"
  
-out = cv2.VideoWriter('project1.avi',cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
+out = cv2.VideoWriter(vid_file,cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
 
 print("Stitch complete")
  
@@ -42,7 +44,7 @@ out.release()
 # set up dropbox
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN)
 
-with open('project1.avi', "rb") as f:
-    dbx.files_upload(f.read(), "/project1.avi", mute = True)
+with open(vid_file, "rb") as f:
+    dbx.files_upload(f.read(), "/"+ vid_file, mute = True)
 
 print("Upload complete")
