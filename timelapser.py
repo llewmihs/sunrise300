@@ -2,7 +2,6 @@ import subprocess
 import dropbox
 import os
 from config import *
-
 from time import sleep, strftime
 from picamera import PiCamera
 
