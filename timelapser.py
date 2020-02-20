@@ -6,6 +6,9 @@ from config import *
 from time import sleep, strftime
 from picamera import PiCamera
 
+# set up dropbox
+dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN)
+
 #set up the camera
 camera = PiCamera()
 camera.resolution = (1920, 1080)
