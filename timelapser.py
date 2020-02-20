@@ -21,14 +21,14 @@ for i in range(50):
     print(i)
     sleep(1)
 
-subprocess.call(["ls *.jpg > stills.txt"])
+subprocess.call("ls *.jpg > stills.txt", shell=True)
 output = subprocess.check_output(["mencoder -nosound -ovc lavc -lavcopts vcodec=mpeg4:aspect=16/9:vbitrate=8000000 -vf scale=1920:1080 -o timelapse.avi -mf type=jpeg:fps=16 mf://@stills.txt"],universal_newlines=True)
 
 print(output)
 
-subprocess.call(["rm -r *.jpg"])
+subprocess.call("rm -r *.jpg", shell=True)
 
 with open("timelapse.avi", "rb") as f:
     dbx.files_upload(f.read(), "/timelapse.avi", mute = True)
 
-subprocess.call(["rm -r stills.txt"])
+subprocess.call("rm -r stills.txt", shell=True)
