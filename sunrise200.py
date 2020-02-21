@@ -71,10 +71,13 @@ if __name__ == "__main__":
             
             print("Image capture complete")
 
+            #start the camera
+            camera.stop_preview()
+
             # now let's create the video
             vid_name = strftime("%Y%m%d")+".avi"
             subprocess.call("ls *.jpg > stills.txt", shell=True)
-            subprocess.call("mencoder -nosound -ovc lavc -lavcopts vcodec=mpeg4:aspect=16/9:vbitrate=8000000 -vf scale=1920:1080 -o %s -mf type=jpeg:fps=16 mf://@stills.txt" % vid_name ,shell=True)
+            subprocess.call("mencoder -nosound -ovc lavc -lavcopts vcodec=mpeg4:aspect=16/9:vbitrate=8000000 -vf scale=1920:1080 -o %s -mf type=jpeg:fps=15 mf://@stills.txt" % vid_name ,shell=True)
             
             subprocess.call("rm -r *.jpg", shell=True)
 
