@@ -9,7 +9,7 @@ camera.start_preview()
 # Camera warm-up time
 sleep(2)
 
-for i in range(50):
+for i in range(60*15):
     #create timestamp filename
     file_path = strftime("%Y%m%d-%H%M%S")+".jpg"
     camera.capture(file_path)
