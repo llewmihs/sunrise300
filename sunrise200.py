@@ -52,6 +52,7 @@ if __name__ == "__main__":
         lapse_window_closed = sunrise_time - timedelta(minutes=30)
 
         # now check if the timelapse window is open
+        print("Timelapse will start at %s" % lapse_window_open)
 
         if lapse_window_open < now < lapse_window_closed:
             print("Timelapse time")
