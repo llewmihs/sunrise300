@@ -16,18 +16,16 @@ camera.start_preview()
 sleep(2)
 
 file_path = strftime("%Y%m%d-%H%M%S")+".jpg"
-    camera.capture(file_path)
+camera.capture(file_path)
     # upload the file to dropbox
-    with open(file_path, "rb") as f:
-        dbx.files_upload(f.read(), "/" + file_path, mute = True)
+with open(file_path, "rb") as f:
+    dbx.files_upload(f.read(), "/" + file_path, mute = True)
 
     # remove the file once upload complete
-    if os.path.exists(file_path):
-        # removing the file using the os.remove() method
-        os.remove(file_path)
-    else:
-        # file not found message
-        print("File not found in the directory")
-    sleep(2)
-
+if os.path.exists(file_path):
+    # removing the file using the os.remove() method
+    os.remove(file_path)
+else:
+    # file not found message
+    print("File not found in the directory")
 camera.stop_preview()
