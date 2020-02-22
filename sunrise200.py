@@ -54,7 +54,7 @@ if __name__ == "__main__":
         # now check if the timelapse window is open
         print("Timelapse will start at %s" % lapse_window_open)
 
-        if lapse_window_open < now < lapse_window_closed:
+        if lapse_window_open < utc.localize(datetime.now()) < lapse_window_closed:
             print("Timelapse time")
             #start the camera
             camera.start_preview()

@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from time import sleep
 
 # astral is an 'offset aware' datetime, so we need to turn datetime into 'offset aware'
 import pytz
@@ -8,24 +9,16 @@ now = utc.localize(datetime.now())
 print("Current time:")
 print(now)
 
-from astral import LocationInfo
-from astral.sun import sun
-
-# set Astral location for Whitley Bay
-city = LocationInfo("Whitley Bay", "England", "Europe/London", 55.0464, 1.4513)
-
-# get today's sunrise time
-s = sun(city.observer, date=datetime.date(datetime.now()))
-
-print(s['sunrise'])
-
-sunrise_time = s['sunrise']
-
 # get the timelapse start time
-lapse_window_open = sunrise_time - timedelta(minutes=100)
-lapse_window_closed = sunrise_time - timedelta(minutes=90)
+lapse_window_open = now + timedelta(minutes=0.5)
+lapse_window_closed = now + timedelta(minutes=1)
 
-
-print(now < lapse_window_open)
-print(now == lapse_window_open)
-print(now > lapse_window_open)
+while True:
+    print("Testing at Now %s" % utc.localize(datetime.now()))
+    print("Lapse window open at %s" % lapse_window_open)
+    print(utc.localize(datetime.now()) < lapse_window_open)
+    print(utc.localize(datetime.now()) > lapse_window_open)
+    if lapse_window_open < utc.localize(datetime.now()) < lapse_window_closed:
+        print("The Golden Window is Open")
+    print("")
+    sleep(5)
