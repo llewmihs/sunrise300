@@ -1,3 +1,5 @@
+# to run in back ground nohup python3 manuallapse.py &
+
 import subprocess
 import dropbox
 import os
