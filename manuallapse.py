@@ -4,9 +4,10 @@ import os
 from config import *
 from time import sleep, strftime
 from picamera import PiCamera
+import sys
 
 # set up dropbox
-dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN)
+dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None)
 
 #set up the camera
 camera = PiCamera()
@@ -16,7 +17,9 @@ camera.start_preview()
 # Camera warm-up time
 sleep(2)
 
-for i in range(60*15):
+no_of_pics = sys.argv[0]
+
+for i in range(no_of_pics):
     #create timestamp filename
     file_path = strftime("%Y%m%d-%H%M%S")+".jpg"
     camera.capture(file_path)

@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
         # get the timelapse start time
         lapse_window_open = sunrise_time - timedelta(minutes=40)
-        lapse_window_closed = sunrise_time - timedelta(minutes=30)
+        lapse_window_closed = sunrise_time - timedelta(minutes=20)
 
         # checking details
         before = utc.localize(datetime.now()) < lapse_window_open
@@ -70,12 +70,13 @@ if __name__ == "__main__":
 
         if lapse_window_open < utc.localize(datetime.now()) < lapse_window_closed:
             print("Timelapse time")
+            notify.send("Timelapse has started")
             #start the camera
             camera.start_preview()
             # Camera warm-up time
             sleep(2)
 
-            for i in range(frames_req):
+            for i in range(900):
                 #create timestamp filename
                 file_path = strftime("%Y%m%d-%H%M%S")+".jpg"
                 # capture the files
@@ -84,6 +85,7 @@ if __name__ == "__main__":
                 sleep(time_delay)
             
             print("Image capture complete")
+            notify.send("Image capture complete")
 
             #start the camera
             camera.stop_preview()
