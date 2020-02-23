@@ -24,8 +24,9 @@ camera.start_preview()
 sleep(2)
 
 
-print("How long do you want to capture (minutes)?")
-real_time = int(input()) * 60
+# print("How long do you want to capture (minutes)?")
+# real_time = int(input()) * 60
+real_time = 60 *60
 film_length = 30
 frame_rate = 15
 
@@ -47,7 +48,7 @@ notify.send("Images complete")
 
 vid_path = strftime("%Y%m%d-%H%M%S")+".mp4"
 
-subprocess.call("ls *.jpg > stills.txt", shell=True)
+# subprocess.call("ls *.jpg > stills.txt", shell=True)
 
 print("Building video...")
 #subprocess.call("mencoder -nosound -ovc lavc -lavcopts vcodec=mpeg4:aspect=16/9:vbitrate=8000000 -vf scale=1920:1080 -o %s -mf type=jpeg:fps=15 mf://@stills.txt" % vid_path,shell=True)
@@ -60,8 +61,8 @@ with open(vid_path, "rb") as f:
 
 
 print("Cleaning up...")
-subprocess.call("rm -r stills.txt", shell=True)
-subprocess.call("rm -r *.avi", shell=True)
+# subprocess.call("rm -r stills.txt", shell=True)
+# subprocess.call("rm -r *.avi", shell=True)
 subprocess.call("rm -r *.jpg", shell=True)
 print("Fin")
 notify.send("Upload complete")
