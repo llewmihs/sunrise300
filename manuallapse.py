@@ -8,6 +8,10 @@ from time import sleep, strftime
 from picamera import PiCamera
 import sys
 
+# mobile notification software
+from notify_run import Notify
+notify = Notify()
+
 # set up dropbox
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None)
 
@@ -31,6 +35,7 @@ delay = real_time / total_frames
 print("The delay is %d seconds" % delay)
 
 print("Taking images...")
+notify.send("Taking %d frames with a %d second delay" % total_frames, delay)
 for i in range(total_frames):
     #create timestamp filename
     file_path = strftime("%Y%m%d-%H%M%S")+".jpg"
@@ -38,6 +43,7 @@ for i in range(total_frames):
     print(i)
     sleep(delay)
 print("Stills complete.")
+notify.send("Images complete")
 
 vid_path = strftime("%Y%m%d-%H%M%S")+".avi"
 
@@ -58,3 +64,4 @@ subprocess.call("rm -r stills.txt", shell=True)
 subprocess.call("rm -r *.avi", shell=True)
 subprocess.call("rm -r *.jpg", shell=True)
 print("Fin")
+notify.send("Upload complete")
