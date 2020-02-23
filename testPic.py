@@ -2,6 +2,7 @@ import dropbox
 from config import *
 from time import sleep, strftime
 from picamera import PiCamera
+import subprocess
 
 # set up dropbox
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None)
@@ -22,3 +23,6 @@ camera.stop_preview()
 with open(file_path, "rb") as f:
     dbx.files_upload(f.read(), "/" + file_path, mute = True)
 print("Image %s uploaded." % file_path)
+
+# when complete tidy up
+subprocess.call("rm -r %s" % file_path, shell=True)
