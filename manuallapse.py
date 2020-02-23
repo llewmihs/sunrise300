@@ -35,7 +35,7 @@ delay = real_time / total_frames
 print("The delay is %d seconds" % delay)
 
 print("Taking images...")
-notify.send("Taking %d frames with a %d second delay" % total_frames, delay)
+notify.send("Taking %d frames with a %d second delay" % (total_frames, delay))
 for i in range(total_frames):
     #create timestamp filename
     file_path = strftime("%Y%m%d-%H%M%S")+".jpg"
