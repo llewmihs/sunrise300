@@ -17,7 +17,7 @@ camera.start_preview()
 # Camera warm-up time
 sleep(2)
 
-no_of_pics = 900
+no_of_pics = 15*5
 
 print("Taking images...")
 for i in range(no_of_pics):
@@ -25,7 +25,7 @@ for i in range(no_of_pics):
     file_path = strftime("%Y%m%d-%H%M%S")+".jpg"
     camera.capture(file_path)
     print(i)
-    sleep(1)
+    sleep(2)
 print("Stills complete.")
 
 vid_path = strftime("%Y%m%d-%H%M%S")+".avi"
