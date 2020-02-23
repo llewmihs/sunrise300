@@ -16,16 +16,24 @@ camera.start_preview()
 
 # Camera warm-up time
 sleep(2)
-print("How many images do you want to take?")
-no_of_pics = int(input())
+
+
+print("How long do you want your film to be?")
+film_length = int(input())
+print("What frame rate do you want?")
+frame_rate = int(input())
+print("What delay (seconds) do you want?")
+delay = int(input())
+
+total_frames = film_length * frame_rate
 
 print("Taking images...")
-for i in range(no_of_pics):
+for i in range(total_frames):
     #create timestamp filename
     file_path = strftime("%Y%m%d-%H%M%S")+".jpg"
     camera.capture(file_path)
     print(i)
-    sleep(2)
+    sleep(delay)
 print("Stills complete.")
 
 vid_path = strftime("%Y%m%d-%H%M%S")+".avi"
