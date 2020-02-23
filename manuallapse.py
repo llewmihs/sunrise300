@@ -18,14 +18,15 @@ camera.start_preview()
 sleep(2)
 
 
-print("How long do you want your film to be?")
-film_length = int(input())
-print("What frame rate do you want?")
-frame_rate = int(input())
-print("What delay (seconds) do you want?")
-delay = int(input())
+print("How long do you want to capture (minutes)?")
+real_time = int(input()) * 60
+film_length = 30
+frame_rate = 15
 
 total_frames = film_length * frame_rate
+
+delay = real_time / total_frames
+print("The delay is %d seconds" % delay)
 
 print("Taking images...")
 for i in range(total_frames):
