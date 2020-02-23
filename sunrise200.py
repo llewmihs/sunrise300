@@ -59,8 +59,11 @@ if __name__ == "__main__":
         before = utc.localize(datetime.now()) < lapse_window_open
         after = utc.localize(datetime.now()) > lapse_window_open
 
+        print(before)
+        print(after)
+
         # notify settings
-        notify.send("Before: %s, After: %s" % before, after)
+        #notify.send("Before: %s, After: %s" % before, after)
 
         # now check if the timelapse window is open
         print("Timelapse will start at %s" % lapse_window_open)
