@@ -16,8 +16,8 @@ camera.start_preview()
 
 # Camera warm-up time
 sleep(2)
-
-no_of_pics = 15*5
+print("How many images do you want to take?")
+no_of_pics = input()
 
 print("Taking images...")
 for i in range(no_of_pics):
