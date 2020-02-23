@@ -45,13 +45,13 @@ for i in range(total_frames):
 print("Stills complete.")
 notify.send("Images complete")
 
-vid_path = strftime("%Y%m%d-%H%M%S")+".avi"
+vid_path = strftime("%Y%m%d-%H%M%S")+".mp4"
 
 subprocess.call("ls *.jpg > stills.txt", shell=True)
 
 print("Building video...")
-subprocess.call("mencoder -nosound -ovc lavc -lavcopts vcodec=mpeg4:aspect=16/9:vbitrate=8000000 -vf scale=1920:1080 -o %s -mf type=jpeg:fps=15 mf://@stills.txt" % vid_path,shell=True)
-
+#subprocess.call("mencoder -nosound -ovc lavc -lavcopts vcodec=mpeg4:aspect=16/9:vbitrate=8000000 -vf scale=1920:1080 -o %s -mf type=jpeg:fps=15 mf://@stills.txt" % vid_path,shell=True)
+subprocess.call("mencoder mf://*.jpg -nosound -of lavf -lavfopts format=mp4 -ovc x264 -x264encopts pass=1:bitrate=2000:crf=24 -o %s -mf type=jpg:fps=15" % vid_path,shell=True)
 
 
 print("Uploading video...")
