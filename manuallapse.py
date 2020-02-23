@@ -17,7 +17,7 @@ camera.start_preview()
 # Camera warm-up time
 sleep(2)
 
-no_of_pics = sys.argv[0]
+no_of_pics = 900
 
 for i in range(no_of_pics):
     #create timestamp filename
