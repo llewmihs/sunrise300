@@ -2,6 +2,10 @@
 import dropbox      # for uploading to dropbox
 from config import *    # my dropbox API key
 
+# mobile notification software
+from notify_run import Notify
+notify = Notify()
+
 from time import sleep, strftime    # for filenaming and time
 from picamera import PiCamera       # the picamera
 
@@ -13,7 +17,7 @@ from astral.sun import sun          # to get the sunrise time
 import subprocess       # to stitch the film into a timelapse
 
 # initial setup
-dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN)        # dropbox
+dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout=None)        # dropbox, with Timeout so that avi uploads work
 
 #set up the camera
 camera = PiCamera()
@@ -50,6 +54,13 @@ if __name__ == "__main__":
         # get the timelapse start time
         lapse_window_open = sunrise_time - timedelta(minutes=40)
         lapse_window_closed = sunrise_time - timedelta(minutes=30)
+
+        # checking details
+        before = utc.localize(datetime.now()) < lapse_window_open
+        after = utc.localize(datetime.now()) > lapse_window_open
+
+        # notify settings
+        notify.send("Before: %s, After: %s" % before, after)
 
         # now check if the timelapse window is open
         print("Timelapse will start at %s" % lapse_window_open)
