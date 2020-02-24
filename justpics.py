@@ -30,13 +30,15 @@ delay = real_time / total_frames
 print("The delay is %d seconds" % delay)
 
 print("Taking images...")
-for i in range(total_frames):
+for i in range(20):
+#for i in range(total_frames):
     #create timestamp filename
     file_path = strftime("%Y%m%d-%H%M%S")+".jpg"
     camera.capture(file_path)
     print(i)
-    sleep(delay)
-    
+    sleep(1)
+    #sleep(delay)
+
 print("Stills complete.")
 
 files = glob('*.jpg')
