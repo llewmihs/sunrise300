@@ -43,6 +43,8 @@ for i in range(total_frames):
     print(i)
     sleep(delay)
 
+camera.stop_preview()
+
 notify.send("Starting to take upload")
 
 files = glob('*.jpg')
