@@ -1,3 +1,6 @@
+# to run in back ground nohup python3 justpics.py &
+
+
 import subprocess
 import dropbox
 import os
@@ -30,7 +33,8 @@ frame_rate = 15
 
 total_frames = film_length * frame_rate
 
-delay = total_frames / real_time
+delay = real_time / total_frames
+
 print("The delay is %d seconds" % delay)
 
 notify.send("Starting to take pictures")
