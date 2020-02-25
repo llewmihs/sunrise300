@@ -1,6 +1,4 @@
 # to run in back ground nohup python3 justpics.py &
-
-
 import subprocess
 import dropbox
 import os
@@ -10,15 +8,17 @@ from picamera import PiCamera
 import sys
 from glob import glob
 
-# mobile notification software
-from notify_run import Notify
-notify = Notify()
-
 # set up dropbox
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None)
 
+from pushbullet import Pushbullet
+pb = Pushbullet(PUSHBULLET)
+
+push = pb.push_note("This is the title", "This is the body")
+
 #set up the camera
 camera = PiCamera()
+
 camera.resolution = (3280, 2464)
 camera.start_preview()
 
@@ -37,8 +37,6 @@ delay = real_time / total_frames
 
 print("The delay is %d seconds" % delay)
 
-notify.send("Starting to take pictures")
-
 print("Taking images...")
 for i in range(total_frames):
     #create timestamp filename
@@ -49,12 +47,8 @@ for i in range(total_frames):
 
 camera.stop_preview()
 
-notify.send("Starting to take upload")
-
 files = glob('*.jpg')
 
 for i in range(len(files)):
     with open(files[i], "rb") as f:
         dbx.files_upload(f.read(), "/" + files[i], mute = True)
-
-notify.send("Upload complete")
