@@ -30,7 +30,7 @@ frame_rate = 15
 
 total_frames = film_length * frame_rate
 
-delay = real_time / total_frames
+delay = total_frames / real_time
 print("The delay is %d seconds" % delay)
 
 notify.send("Starting to take pictures")
