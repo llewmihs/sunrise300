@@ -19,7 +19,7 @@ dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None)
 
 #set up the camera
 camera = PiCamera()
-camera.resolution = (1920, 1080)
+camera.resolution = (3280, 2464)
 camera.start_preview()
 
 # Camera warm-up time
