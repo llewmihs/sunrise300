@@ -14,7 +14,7 @@ dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None)
 from pushbullet import Pushbullet
 pb = Pushbullet(PUSHBULLET)
 
-push = pb.push_note("This is the title", "This is the body")
+
 
 #set up the camera
 camera = PiCamera()
@@ -35,9 +35,8 @@ total_frames = film_length * frame_rate
 
 delay = real_time / total_frames
 
-print("The delay is %d seconds" % delay)
+push = pb.push_note("The Timelapse Has Started", "The delay is %d seconds" % delay)
 
-print("Taking images...")
 for i in range(total_frames):
     #create timestamp filename
     file_path = strftime("%Y%m%d-%H%M%S")+".jpg"
@@ -49,6 +48,10 @@ camera.stop_preview()
 
 files = glob('*.jpg')
 
+push = pb.push_note("Timelapse complete", "Upload begins")
+
 for i in range(len(files)):
     with open(files[i], "rb") as f:
         dbx.files_upload(f.read(), "/" + files[i], mute = True)
+
+push = pb.push_note("Job done", "Upload complete")
