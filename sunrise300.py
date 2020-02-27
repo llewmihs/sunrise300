@@ -72,8 +72,12 @@ try:
     # clear current crontab
     my_cron.remove_all()
 
+    # get time from crontab comment
+    now = datetime.now()
+    day = now.strftime("%d")
+
     # set the cron job to run in the background
-    job = my_cron.new(command='nohup python3 /home/pi/sunrise300.py &', comment="Yes")
+    job = my_cron.new(command='nohup python3 /home/pi/sunrise300.py &', comment=day)
     job.hour.on(timelapse_start.hour)
     job.minute.on(timelapse_start.minute)
 
