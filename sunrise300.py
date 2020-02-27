@@ -41,7 +41,8 @@ for i in range(total_frames):
     file_path = strftime("%Y%m%d-%H%M%S")+".jpg"
     camera.capture(file_path)
     print(i)
-    sleep(delay)
+    sleep(2)
+    #sleep(delay)
 camera.stop_preview()
 
 push = pb.push_note("Timelapse complete", "Upload begins")
