@@ -31,7 +31,7 @@ real_time = 90 * 60 # 90 minutes * 60 seconds
 film_length = 30
 frame_rate = 15
 #total_frames = film_length * frame_rate
-total_frames = 10
+total_frames = 5
 delay = real_time / total_frames
 
 push = pb.push_note("The Timelapse Has Started", "The delay is %d seconds" % delay)
@@ -73,7 +73,7 @@ try:
     my_cron.remove_all()
 
     # set the cron job to run in the background
-    job = my_cron.new(command='nohup python3 /home/pi/sunrise300.py &', comment=datetime.now())
+    job = my_cron.new(command='nohup python3 /home/pi/sunrise300.py &', comment="Now we know")
     job.hour.on(timelapse_start.hour)
     job.minute.on(timelapse_start.minute)
 
@@ -83,7 +83,7 @@ try:
     for job in my_cron:
         push = pb.push_note("New crontab installed", job)
 except:
-    push = pb.push_note("New crontab failed")
+    push = pb.push_note("New crontab failed", "What a shame")
 
 
 
