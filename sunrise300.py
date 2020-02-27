@@ -73,7 +73,7 @@ try:
     my_cron.remove_all()
 
     # set the cron job to run in the background
-    job = my_cron.new(command='nohup python3 /home/pi/sunrise300.py &', comment="Now we know")
+    job = my_cron.new(command='nohup python3 /home/pi/sunrise300.py &', comment="Yes")
     job.hour.on(timelapse_start.hour)
     job.minute.on(timelapse_start.minute)
 
@@ -81,7 +81,7 @@ try:
     my_cron.write()
 
     for job in my_cron:
-        push = pb.push_note("New crontab installed", job)
+        push = pb.push_note("New crontab installed", "Woop")
 except:
     push = pb.push_note("New crontab failed", "What a shame")
 
