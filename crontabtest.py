@@ -6,4 +6,5 @@ for job in my_cron:
 
 job = my_cron.new(command='python3 /home/pi/justpics.py')
 
-job.setall(time(10,2))
+job.hour.on(2)
+job.minute.on(10)
