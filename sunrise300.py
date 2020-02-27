@@ -31,7 +31,7 @@ real_time = 90 * 60 # 90 minutes * 60 seconds
 film_length = 30
 frame_rate = 15
 total_frames = film_length * frame_rate
-total_frames = 4
+#total_frames = 4
 delay = real_time / total_frames
 
 push = pb.push_note("The Timelapse Has Started", "The delay is %d seconds" % delay)
@@ -41,8 +41,8 @@ for i in range(total_frames):
     file_path = strftime("%Y%m%d-%H%M%S")+".jpg"
     camera.capture(file_path)
     print(i)
-    sleep(2)
-    #sleep(delay)
+    #sleep(2)
+    sleep(delay)
 camera.stop_preview()
 
 push = pb.push_note("Timelapse complete", "Upload begins")
