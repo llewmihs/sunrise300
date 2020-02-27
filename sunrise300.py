@@ -30,8 +30,8 @@ sleep(2) # Camera warm-up time
 real_time = 90 * 60 # 90 minutes * 60 seconds
 film_length = 30
 frame_rate = 15
-#total_frames = film_length * frame_rate
-total_frames = 5
+total_frames = film_length * frame_rate
+total_frames = 4
 delay = real_time / total_frames
 
 push = pb.push_note("The Timelapse Has Started", "The delay is %d seconds" % delay)
@@ -62,8 +62,8 @@ try:
     # set Astral location for Whitley Bay
     city = LocationInfo("Whitley Bay", "England", "Europe/London", 55.0464, -1.4513)
 
-    # get today's sunrise time
-    s = sun(city.observer, date=datetime.date(datetime.now()))
+    # get tomorrow's sunrise time
+    s = sun(city.observer, date=datetime.date(datetime.now())+timedelta(days=1))
     sunrise_time = s['sunrise']
 
     # timelapse shoudl start 1 hour prior
