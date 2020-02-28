@@ -79,7 +79,7 @@ def cron_update(timelapse_start):
     my_cron.remove_all()    # clear current crontab
     
     # set the cron job to run in the background
-    job = my_cron.new(command='nohup python3 /home/pi/sunrise300/sunrise300.py &')
+    job = my_cron.new(command='nohup python3 /home/pi/sunrise300/sunrise3000.py &')
     job.hour.on(timelapse_start.hour)
     job.minute.on(timelapse_start.minute)
     my_cron.write() #write the job to the crontab
