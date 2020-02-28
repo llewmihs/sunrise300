@@ -34,7 +34,7 @@ logging.info(f'Script ran at {now}')
 
 # the Picamera
 camera = PiCamera()
-camera.resolution = (3280, 2464)
+camera.resolution = (1640, 1232)
 
 def lapse_details(real_time):
     real_time = 90 * 60 # 90 minutes * 60 seconds
@@ -42,8 +42,7 @@ def lapse_details(real_time):
     frame_rate = 15
     total_frames = film_length * frame_rate
     delay = real_time / total_frames
-    # logger.info(f"Timelapse delay = {delay}, total frames = {total_frames}")
-    return 2, 1
+    return 1, 2
     #return total_frames, delay
 
 def the_camera(no_of_frames, delay):
@@ -64,7 +63,6 @@ def dropbox_uploader():
             print(f"Tring file {files[i]}")
             dbx.files_upload(f.read(), files[i], mute = True)
     print("Successfully uploaded")
-
 
 def start_time():
     # set Astral location for Whitley Bay
@@ -94,7 +92,6 @@ if __name__ == "__main__":
     try:
         total_frames, delay = lapse_details(60)
         the_camera(total_frames, delay)
-        push = pb.push_note("The upload has started","Woop")
         dropbox_uploader()
         push = pb.push_note("The upload has ended","Double Woop")
         lapse_start_time = start_time()
@@ -108,9 +105,5 @@ if __name__ == "__main__":
         logging.info('The script failed to execute')
     finally:
         clean_up()
+        logging.info('*** *** *** *** *** *** *** ***')
     
-
-
-    
-
-
