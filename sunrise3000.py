@@ -88,10 +88,9 @@ def clean_up():
 
 if __name__ == "__main__":
     total_frames, delay = lapse_details(60)
-    try:
-        the_camera(total_frames, delay)
-    except:
-        print("There was an error during the timelapse photography")
+    
+    the_camera(total_frames, delay)
+
     
     dropbox_uploader()
 
