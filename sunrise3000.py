@@ -56,8 +56,8 @@ def the_camera(no_of_frames, delay):
 def dropbox_uploader():
     files = glob('/home/pi/sunrise300/images/*.jpg')
     for i in range(len(files)):
-        with open(files[i], "rb") as f:
-            dbx.files_upload(f.read(), "/home/pi/sunrise300/images/" + files[i], mute = True)
+        with open("/home/pi/sunrise300/images/" + files[i], "rb") as f:
+            dbx.files_upload(f.read(), "/" + files[i], mute = True)
     print("Successfully uploaded")
 
 
