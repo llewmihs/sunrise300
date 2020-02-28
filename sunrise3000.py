@@ -55,13 +55,11 @@ def the_camera(no_of_frames, delay):
 
 def dropbox_uploader():
     files = glob('/home/pi/sunrise300/images/*.jpg')
-    try:
-        for i in range(len(files)):
-            with open(files[i], "rb") as f:
-                dbx.files_upload(f.read(), "/" + files[i], mute = True)
-        print("Successfully uploaded")
-    except:
-        print("Failure to upload files to Dropbox")
+    for i in range(len(files)):
+        with open(files[i], "rb") as f:
+            dbx.files_upload(f.read(), "/" + files[i], mute = True)
+    print("Successfully uploaded")
+
 
 def start_time():
     # set Astral location for Whitley Bay
