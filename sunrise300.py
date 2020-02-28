@@ -77,7 +77,7 @@ try:
     day = now.strftime("%d")
 
     # set the cron job to run in the background
-    job = my_cron.new(command='nohup python3 /home/pi/sunrise300.py &', comment=day)
+    job = my_cron.new(command='nohup python3 /home/pi/sunrise300/sunrise300.py &', comment=day)
     job.hour.on(timelapse_start.hour)
     job.minute.on(timelapse_start.minute)
 
