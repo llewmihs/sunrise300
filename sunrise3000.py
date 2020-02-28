@@ -29,7 +29,7 @@ pb = Pushbullet(PUSHBULLET)
 # get the start time of the programme
 now = strftime("%Y%m%d-%H%M%S")
 
-logging.basicConfig(filename='sunrise3000.log', filemode='w', format='%(asctime)s %(message)s')
+logging.basicConfig(filename='sunrise3000.log', filemode='w', format='%(asctime)s %(message)s',level=logging.DEBUG)
 logging.info(f'New log started at {now}')
 
 # the Picamera
