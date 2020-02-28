@@ -19,7 +19,7 @@ from crontab import CronTab     # so that we can write to the crontab at the end
 from astral import LocationInfo     # to get the location info `pip3 install astral`
 from astral.sun import sun          # to get the sunrise time
 
-import logging  #create a logfile for debug purposes
+import logging  #create a logfile for debug purposes https://www.geeksforgeeks.org/logging-in-python/
 
 # now the initial set-up: Dropbox and Pushbullet
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
@@ -27,6 +27,7 @@ from pushbullet import Pushbullet
 pb = Pushbullet(PUSHBULLET)
 
 logging.basicConfig(filename='/home/pi/sunrise300/logfile/app.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s')
+logger=logging.getLogger() 
 
 # the Picamera
 camera = PiCamera()
@@ -38,7 +39,7 @@ def lapse_details(real_time):
     frame_rate = 15
     total_frames = film_length * frame_rate
     delay = real_time / total_frames
-    logging.info("Timelapse delay = %d, total frames = %d" % (delay, total_frames))
+    logger.info(f"Timelapse delay = {delay}, total frames = {total_frames}")
     return total_frames, delay
 
 def the_camera(no_of_frames, delay):
