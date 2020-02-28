@@ -90,7 +90,6 @@ def clean_up():
     subprocess.call("rm -r /home/pi/sunrise300/images/*.jpg", shell=True)
 
 if __name__ == "__main__":
-
     try:
         total_frames, delay = lapse_details(60)
         the_camera(total_frames, delay)
