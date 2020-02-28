@@ -97,7 +97,7 @@ if __name__ == "__main__":
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
     except:
-        logging.info('The script failed to execute)
+        logging.info('The script failed to execute')
     finally:
         clean_up()
     
