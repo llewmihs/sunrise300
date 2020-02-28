@@ -90,7 +90,7 @@ def clean_up():
     subprocess.call("rm -r /home/pi/sunrise300/images/*.jpg", shell=True)
 
 if __name__ == "__main__":
-    push = pb.push_note(f"The Timelapse Has Started", f"Time {strftime("%Y%m%d-%H%M%S")}")
+    push = pb.push_note(f"The Timelapse Has Started", f"Time {now}")
     try:
         total_frames, delay = lapse_details(60)
         the_camera(total_frames, delay)
@@ -99,7 +99,11 @@ if __name__ == "__main__":
         push = pb.push_note("The upload has ended","Double Woop")
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
-        logging.info(f'Script succesfully completed at {strftime("%Y%m%d-%H%M%S")}')
+
+        # get the start time of the programme
+        end = strftime("%Y%m%d-%H%M%S")
+
+        logging.info(f'Script succesfully completed at {end}')
     except:
         logging.info('The script failed to execute')
     finally:
