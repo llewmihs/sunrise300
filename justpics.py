@@ -19,10 +19,8 @@ pb = Pushbullet(PUSHBULLET)
 
 #set up the camera
 camera = PiCamera()
-
 camera.resolution = (3280, 2464)
 camera.start_preview()
-
 # Camera warm-up time
 sleep(2)
 
@@ -31,9 +29,7 @@ sleep(2)
 real_time = 60 * 60
 film_length = 30
 frame_rate = 15
-
 total_frames = film_length * frame_rate
-
 delay = real_time / total_frames
 
 push = pb.push_note("The Timelapse Has Started", "The delay is %d seconds" % delay)
