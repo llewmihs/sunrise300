@@ -42,8 +42,8 @@ def lapse_details(real_time):
     frame_rate = 15
     total_frames = film_length * frame_rate
     delay = real_time / total_frames
-    return 1, 2
-    #return total_frames, delay
+    #return 1, 2
+    return total_frames, delay
 
 def the_camera(no_of_frames, delay):
     camera.start_preview()
