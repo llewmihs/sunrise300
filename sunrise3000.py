@@ -59,7 +59,7 @@ def dropbox_uploader():
     for i in range(len(files)):
         with open(files[i], "rb") as f:
             print(f"Tring file {files[i]}")
-            dbx.files_upload(f.read(), "/" + files[i], mute = True)
+            dbx.files_upload(f.read(), files[i], mute = True)
     print("Successfully uploaded")
 
 
