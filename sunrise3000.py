@@ -29,8 +29,8 @@ pb = Pushbullet(PUSHBULLET)
 # get the start time of the programme
 now = strftime("%Y%m%d-%H%M%S")
 
-logging.basicConfig(filename='sunrise3000.log', filemode='w', format='%(asctime)s %(message)s',level=logging.DEBUG)
-logging.info(f'New log started at {now}')
+logging.basicConfig(filename='sunrise3000.log', filemode='w', format='%(asctime)s %(message)s',level=logging.INFO)
+logging.info(f'Script run at {now}')
 
 # the Picamera
 camera = PiCamera()
@@ -87,19 +87,23 @@ def cron_update(timelapse_start):
     my_cron.write() #write the job to the crontab
 
 def clean_up():
-    subprocess.call("/home/pi/sunrise300/images/*.jpg", shell=True)
+    subprocess.call("rm -r /home/pi/sunrise300/images/*.jpg", shell=True)
 
 if __name__ == "__main__":
+
+    try:
+        total_frames, delay = lapse_details(60)
+        the_camera(total_frames, delay)
+        dropbox_uploader()
+        lapse_start_time = start_time()
+        cron_update(lapse_start_time)
+    except:
+        logging.info('The script failed to execute)
+    finally:
+        clean_up()
     
-    total_frames, delay = lapse_details(60)
-    
-    the_camera(total_frames, delay)
+
 
     
-    dropbox_uploader()
-
-    lapse_start_time = start_time()
-
-    cron_update(lapse_start_time)
 
 
