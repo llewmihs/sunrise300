@@ -46,7 +46,7 @@ def lapse_details(real_time):
 def the_camera(no_of_frames, delay):
     camera.start_preview()
     sleep(2) # Camera warm-up time
-    for i in range(total_frames):
+    for i in range(no_of_frames):
         #create timestamp filename
         file_path = "/home/pi/sunrise300/images/" + strftime("%Y%m%d-%H%M%S")+".jpg"
         camera.capture(file_path)
