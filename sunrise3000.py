@@ -57,7 +57,8 @@ def dropbox_uploader():
     files = glob('/home/pi/sunrise300/images/*.jpg')
     print(files)
     for i in range(len(files)):
-        with open("/home/pi/sunrise300/images/" + files[i], "rb") as f:
+        with open(files[i], "rb") as f:
+            print(f"Tring file {files[i]}")
             dbx.files_upload(f.read(), "/" + files[i], mute = True)
     print("Successfully uploaded")
 
