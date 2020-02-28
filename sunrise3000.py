@@ -40,7 +40,7 @@ def lapse_details(real_time):
     total_frames = film_length * frame_rate
     delay = real_time / total_frames
     # logger.info(f"Timelapse delay = {delay}, total frames = {total_frames}")
-    return 4, 2
+    return 2, 1
     #return total_frames, delay
 
 def the_camera(no_of_frames, delay):
@@ -55,6 +55,7 @@ def the_camera(no_of_frames, delay):
 
 def dropbox_uploader():
     files = glob('/home/pi/sunrise300/images/*.jpg')
+    print(files)
     for i in range(len(files)):
         with open("/home/pi/sunrise300/images/" + files[i], "rb") as f:
             dbx.files_upload(f.read(), "/" + files[i], mute = True)
