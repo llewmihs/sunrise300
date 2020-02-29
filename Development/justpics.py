@@ -7,6 +7,7 @@ from time import sleep, strftime
 from picamera import PiCamera
 import sys
 from glob import glob
+from PIL import Image
 
 # set up dropbox
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None)
@@ -43,6 +44,13 @@ for i in range(total_frames):
 camera.stop_preview()
 
 files = glob('*.jpg')
+
+# crop each file.
+for i in range(len(files)):
+    im = Image.open(files[i])
+    box = (0,265,2160,1480)
+    new_im = im.crop(box)
+    new_im.save(files[i])
 
 push = pb.push_note("Timelapse complete", "Upload begins")
 
