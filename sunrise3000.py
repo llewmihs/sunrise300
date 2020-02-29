@@ -26,9 +26,6 @@ dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none 
 from pushbullet import Pushbullet
 pb = Pushbullet(PUSHBULLET)
 
-# get the start time of the programme
-now = strftime("%Y%m%d-%H%M%S")
-
 logging.basicConfig(filename='sunrise3000.log', filemode='a', format='%(asctime)s %(message)s',level=logging.INFO)
 logging.info(f'Script ran at {now}')
 
@@ -88,7 +85,10 @@ def clean_up():
     subprocess.call("rm -r /home/pi/sunrise300/images/*.jpg", shell=True)
 
 if __name__ == "__main__":
-    push = pb.push_note(f"The Timelapse Has Started", f"Time {now}")
+
+    now = strftime("%Y%m%d-%H%M%S") # get the start time of the programme
+    push = pb.push_note(f"The Timelapse Has Started at {now}", "Fun times")
+    
     try:
         total_frames, delay = lapse_details(60)
         the_camera(total_frames, delay)
