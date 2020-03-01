@@ -6,6 +6,7 @@ from time import sleep, strftime # for the picamera and to name the files
 from datetime import datetime, timedelta       # possbily not needed but used to get the sunrise for today
 from picamera import PiCamera # raspberry pi camera
 import subprocess # to run file cleanup after the upload
+from glob import glob # for the file upload process
 
 # the Picamera
 camera = PiCamera()
