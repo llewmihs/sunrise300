@@ -1,0 +1,14 @@
+ffmpeg -i INPUT -c:v libx264 -x264-params level=30:bframes=0:weightp=0:\
+cabac=0:ref=1:vbv-maxrate=768:vbv-bufsize=2000:analyse=all:me=umh:\
+no-fast-pskip=1:subq=6:8x8dct=0:trellis=0 OUTPUT
+
+ffmpeg -r 15 -f image2 -start_number 0000 -i IMAGE_%04d.JPG -vf crop=1640:923:0:0 -codec:v prores -profile:v 2 preview.mov
+
+ffmpeg -i preview.mov -c:v libx264 -x264opts keyint=123:min-keyint=20 -an out.mkv
+
+ffmpeg -r 24 -pattern_type glob -i '*.JPG' -i IMAGE_%04d.JPG -s hd1080 -vcodec libx264 timelapse.mp4
+
+ffmpeg -r 15 -start_number 0000 -i IMAGE_%04d.JPG -s 1280x720 -vcodec libx264 preview2.mp4
+
+
+1640, 1232
