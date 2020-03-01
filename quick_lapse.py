@@ -34,5 +34,5 @@ def the_camera(no_of_frames, delay):
     camera.stop_preview()
 
 if __name__ == "__main__":
-    the_camera(45,2)
+    the_camera(45,1)
 
