@@ -26,6 +26,8 @@ dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none 
 from pushbullet import Pushbullet
 pb = Pushbullet(PUSHBULLET)
 
+now = strftime("%Y%m%d")
+
 logging.basicConfig(filename='sunrise3000.log', filemode='a', format='%(asctime)s %(message)s',level=logging.INFO)
 logging.info(f'Script ran at {now}')
 
