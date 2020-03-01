@@ -35,8 +35,8 @@ logging.info(f'Script ran at {now}')
 camera = PiCamera()
 camera.resolution = (1640, 1232)
 
-def lapse_details(real_time):
-    real_time = 90 * 60 # 90 minutes * 60 seconds
+def lapse_details(duration):
+    real_time = duration * 60 # minutes * 60 seconds
     film_length = 30
     frame_rate = 15
     total_frames = film_length * frame_rate
@@ -98,8 +98,8 @@ if __name__ == "__main__":
     
     try:
         total_frames, delay = lapse_details(60)
-        the_camera(45, 1)
-        # the_camera(total_frames, delay)
+        # the_camera(45, 1)
+        the_camera(total_frames, delay)
         the_lapser()
         dropbox_uploader()
         push = pb.push_note("The upload has ended","Double Woop")
@@ -113,6 +113,6 @@ if __name__ == "__main__":
     except:
         logging.info('The script failed to execute')
     finally:
-        # clean_up()
+        clean_up()
         logging.info('*** *** *** *** *** *** *** ***')
     

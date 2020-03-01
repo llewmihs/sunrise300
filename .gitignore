@@ -1,3 +1,4 @@
 config.py
 *.jpg
 *.log
+*.code-workspace
