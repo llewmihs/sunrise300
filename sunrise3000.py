@@ -53,7 +53,7 @@ def the_camera(no_of_frames, delay):
     camera.stop_preview()
 
 def the_lapser():
-    vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d)+".mov"
+    vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d") + ".mov"
     subprocess.call(f"ffmpeg -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -codec:v prores -profile:v 2 {vid_file}", shell=True)
 
 def dropbox_uploader():
