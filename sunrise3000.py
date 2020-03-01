@@ -56,7 +56,6 @@ def the_lapser():
     vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d)+".mov"
     subprocess.call(f"ffmpeg -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -codec:v prores -profile:v 2 {vid_file}", shell=True)
 
-
 def dropbox_uploader():
     files = glob('/home/pi/sunrise300/*.mov')
     print(files)
@@ -88,6 +87,7 @@ def cron_update(timelapse_start):
 
 def clean_up():
     subprocess.call("rm -r /home/pi/sunrise300/images/*.jpg", shell=True)
+    subprocess.call("rm -r /home/pi/sunrise300/*.mov", shell=True)
 
 if __name__ == "__main__":
 
@@ -111,6 +111,6 @@ if __name__ == "__main__":
     except:
         logging.info('The script failed to execute')
     finally:
-        clean_up()
+        # clean_up()
         logging.info('*** *** *** *** *** *** *** ***')
     
