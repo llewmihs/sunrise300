@@ -47,17 +47,22 @@ def the_camera(no_of_frames, delay):
     sleep(2) # Camera warm-up time
     for i in range(no_of_frames):
         #create timestamp filename
-        file_path = "/home/pi/sunrise300/images/" + strftime("%Y%m%d-%H%M%S")+".jpg"
+        file_path = "/home/pi/sunrise300/images/" + 'IMAGE_' '{0:04d}'.format(i)+".JPG"
         camera.capture(file_path)
         sleep(delay)
     camera.stop_preview()
 
+def the_lapser():
+    vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d)+".mov"
+    subprocess.call(f"ffmpeg -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -codec:v prores -profile:v 2 {vid_file}", shell=True)
+
+
 def dropbox_uploader():
-    files = glob('/home/pi/sunrise300/images/*.jpg')
+    files = glob('/home/pi/sunrise300/*.mov')
     print(files)
     for i in range(len(files)):
         with open(files[i], "rb") as f:
-            print(f"Tring file {files[i]}")
+            print(f"Trying file {files[i]}")
             dbx.files_upload(f.read(), files[i], mute = True)
     print("Successfully uploaded")
 
@@ -91,7 +96,9 @@ if __name__ == "__main__":
     
     try:
         total_frames, delay = lapse_details(60)
-        the_camera(total_frames, delay)
+        the_camera(45, 1)
+        # the_camera(total_frames, delay)
+        the_lapser()
         dropbox_uploader()
         push = pb.push_note("The upload has ended","Double Woop")
         lapse_start_time = start_time()
