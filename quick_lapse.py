@@ -28,7 +28,7 @@ def the_camera(no_of_frames, delay):
     for i in range(no_of_frames):
         #create timestamp filename
         print(f'Taking photo {i} of {no_of_frames}')
-        file_path = f"/home/pi/sunrise300/minilapse/" + "IMG_{i}"+".jpg"
+        file_path = "/home/pi/sunrise300/minilapse/" + f"IMG_{i}"+".jpg"
         camera.capture(file_path)
         sleep(delay)
     camera.stop_preview()
