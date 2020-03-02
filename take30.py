@@ -4,6 +4,7 @@ from config import *
 import dropbox      # for uploading to dropbox, `pip3 install dropbox`
 import subprocess
 from glob import glob # for the file upload process
+from time import sleep, strftime
 
 # the Picamera
 camera = PiCamera()
