@@ -2,6 +2,8 @@
 from picamera import PiCamera # raspberry pi cameraexit
 from config import *
 import dropbox      # for uploading to dropbox, `pip3 install dropbox`
+import subprocess
+from glob import glob # for the file upload process
 
 # the Picamera
 camera = PiCamera()
@@ -21,10 +23,18 @@ def the_camera(no_of_frames, delay):
     camera.stop_preview()
 
 def dropbox_uploader():
-    files = glob('/home/pi/sunrise300/minilapse/*.mov')
+    files = glob('/home/pi/sunrise300/minilapse/*.mp4')
     print(files)
     for i in range(len(files)):
         with open(files[i], "rb") as f:
             print(f"Tring file {files[i]}")
             dbx.files_upload(f.read(), files[i], mute = True)
         print("Successfully uploaded")
+
+if __name__ == "__main__":
+    the_camera(30,1)
+    subprocess("ffmpeg -y -f image2 -start_number 0000 -i sunrise300/minilapse/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -pix_fmt yuv420p /home/pi/sunrise300/minilapse/preview.mp4", shell=True)
+)
+    #subprocess.call("ffmpeg -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/minilapse/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -codec:v prores -profile:v 2 /home/pi/sunrise300/minilapse/preview.mov", shell=True)
+
+    dropbox_uploader()
