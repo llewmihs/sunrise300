@@ -55,16 +55,15 @@ def the_camera(no_of_frames, delay):
     camera.stop_preview()
 
 def the_lapser():
-    vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d") + ".mov"
-    subprocess.call(f"ffmpeg -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -codec:v prores -profile:v 2 {vid_file}", shell=True)
+    vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d") + ".mp4"
+    subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/minilapse/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -pix_fmt yuv420p {vid_file}", shell=True)
+    return(vid_file)
 
-def dropbox_uploader():
-    files = glob('/home/pi/sunrise300/*.mov')
-    print(files)
-    for i in range(len(files)):
-        with open(files[i], "rb") as f:
-            print(f"Trying file {files[i]}")
-            dbx.files_upload(f.read(), files[i], mute = True)
+def dropbox_uploader(filename):
+    # files = glob('/home/pi/sunrise300/*.mov')
+    with open(filename, "rb") as f:
+        print(f"Trying file {filename}")
+        dbx.files_upload(f.read(), filename, mute = True)
     print("Successfully uploaded")
 
 def start_time():
@@ -98,6 +97,7 @@ if __name__ == "__main__":
     
     try:
         total_frames, delay = lapse_details(60)
+        print(total_frames, delay)
         # the_camera(45, 1)
         the_camera(total_frames, delay)
         the_lapser()
