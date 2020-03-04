@@ -23,16 +23,17 @@ def the_camera(no_of_frames, delay):
         sleep(delay)
     camera.stop_preview()
 
-def dropbox_uploader():
-    files = glob('/home/pi/sunrise300/minilapse/*.mp4')
+def dropbox_uploader(file_path):
+    files = file_path
     print(files)
-    for i in range(len(files)):
-        with open(files[i], "rb") as f:
-            print(f"Tring file {files[i]}")
-            dbx.files_upload(f.read(), files[i], mute = True)
+
+    with open(files, "rb") as f:
+        print(f"Tring file {files}")
+        dbx.files_upload(f.read(), files, mute = True)
         print("Successfully uploaded")
 
 if __name__ == "__main__":
     the_camera(45,0.5)
-    subprocess.call("ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/minilapse/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -pix_fmt yuv420p /home/pi/sunrise300/minilapse/preview.mp4", shell=True)
-    dropbox_uploader()
+    vid_file = "/home/pi/sunrise300/minilapse/" + strftime("%Y%m%d-%H%M")+".mp4"
+    subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/minilapse/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -pix_fmt yuv420p {vid_file}", shell=True)
+    dropbox_uploader(vid_file)
