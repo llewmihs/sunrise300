@@ -17,7 +17,7 @@ def take_a_picture():
     print(f"Taking photo {filename}")
     camera.start_preview()
     sleep(2) # Camera warm-up time
-    camera.capture(file_path)
+    camera.capture(filename)
     return filename
 
 def upload_to_dropbox(file_path):
