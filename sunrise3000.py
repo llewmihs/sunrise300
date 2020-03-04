@@ -90,10 +90,10 @@ if __name__ == "__main__":
     push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
     print(total_frames, delay)
         
-    the_camera(30, 1)
+    the_camera(15, 1)
     #the_camera(total_frames, delay)
     
-    vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d") + ".mp4"
+    vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
     the_lapser(vid_file)
     dropbox_uploader(vid_file)
     push = pb.push_note("The upload has ended","Double Woop")
