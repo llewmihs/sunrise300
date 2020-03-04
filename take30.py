@@ -35,6 +35,4 @@ def dropbox_uploader():
 if __name__ == "__main__":
     the_camera(45,0.5)
     subprocess.call("ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/minilapse/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -pix_fmt yuv420p /home/pi/sunrise300/minilapse/preview.mp4", shell=True)
-    #subprocess.call("ffmpeg -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/minilapse/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -codec:v prores -profile:v 2 /home/pi/sunrise300/minilapse/preview.mov", shell=True)
-
     dropbox_uploader()

@@ -12,7 +12,6 @@ camera = PiCamera()
 camera.resolution = (1640, 1232)
 
 def take_a_picture():
-    
     filename = "IMAGE_" + strftime("%Y%m%d-%H%M%S") + ".JPG"
     print(f"Taking photo {filename}")
     camera.start_preview()
