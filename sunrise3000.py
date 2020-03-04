@@ -56,7 +56,7 @@ def the_camera(no_of_frames, delay):
     camera.stop_preview()
 
 def the_lapser(vid_file):
-    subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -preset slow -crf 22 {vid_file}", shell=True)
+    subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -preset veryslow -crf 17 {vid_file}", shell=True)
 
 def upload_to_twitter(vid_file):
     video = open(f'{vid_file}', 'rb')
@@ -111,7 +111,10 @@ if __name__ == "__main__":
     the_lapser(vid_file)
     dropbox_uploader(vid_file)
     try:
-        upload_to_twitter(vid_file)
+        if len(sys.argv) == 1:
+            upload_to_twitter(vid_file)
+        else:
+            print("Test run, not uploading")
     except:
         push = pb.push_note("Failed upload","Go away and cry")
     push = pb.push_note("The upload has ended","Double Woop")
