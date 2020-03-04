@@ -12,7 +12,6 @@ from datetime import datetime, timedelta       # possbily not needed but used to
 
 from picamera import PiCamera # raspberry pi camera
 
-from glob import glob # for the file upload process
 import subprocess # to run file cleanup after the upload
 
 from crontab import CronTab     # so that we can write to the crontab at the end of each day `pip3 install python-crontab`
