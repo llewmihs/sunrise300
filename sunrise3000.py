@@ -19,6 +19,8 @@ from crontab import CronTab     # so that we can write to the crontab at the end
 from astral import LocationInfo     # to get the location info `pip3 install astral`
 from astral.sun import sun          # to get the sunrise time
 
+import sys # for argv testing
+
 # now the initial set-up: Dropbox and Pushbullet
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
 from pushbullet import Pushbullet
@@ -54,7 +56,7 @@ def the_camera(no_of_frames, delay):
     camera.stop_preview()
 
 def the_lapser(vid_file):
-    subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -pix_fmt yuv420p {vid_file}", shell=True)
+    subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -preset slow -crf 22 {vid_file}", shell=True)
 
 def upload_to_twitter(vid_file):
     video = open(f'{vid_file}', 'rb')
@@ -97,9 +99,13 @@ if __name__ == "__main__":
     total_frames, delay = lapse_details(60)
     push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
     print(total_frames, delay)
-        
-    #the_camera(15, 1)
-    the_camera(total_frames, delay)
+    
+    if len(sys.argv) > 1:
+        print("test script frames = 15")
+        the_camera(15, 1)
+    else:
+        print(f"test script frames = {total_frames}")
+        the_camera(total_frames, delay)
     
     vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
     the_lapser(vid_file)
