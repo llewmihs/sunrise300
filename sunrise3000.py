@@ -85,25 +85,22 @@ def clean_up():
 if __name__ == "__main__":
 
     now = strftime("%Y%m%d-%H%M%S") # get the start time of the programme
-    
-    try:
-        total_frames, delay = lapse_details(60)
-        push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
-        print(total_frames, delay)
-        the_camera(30, 1)
-        the_camera(total_frames, delay)
-        vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d") + ".mp4"
-        the_lapser()
-        dropbox_uploader(vid_file)
-        push = pb.push_note("The upload has ended","Double Woop")
-        lapse_start_time = start_time()
-        cron_update(lapse_start_time)
 
-        # get the start time of the programme
-        end = strftime("%Y%m%d-%H%M%S")
-    except:
-        print('The script failed to execute')
-    finally:
-        clean_up()
+    total_frames, delay = lapse_details(60)
+    push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
+    print(total_frames, delay)
+        
+    the_camera(30, 1)
+    #the_camera(total_frames, delay)
+    
+    vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d") + ".mp4"
+    the_lapser()
+    dropbox_uploader(vid_file)
+    push = pb.push_note("The upload has ended","Double Woop")
+    lapse_start_time = start_time()
+    cron_update(lapse_start_time)
+
+
+    clean_up()
 
     
