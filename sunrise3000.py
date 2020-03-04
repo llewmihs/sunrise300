@@ -78,8 +78,8 @@ def cron_update(timelapse_start):
     my_cron.write() #write the job to the crontab
 
 def clean_up():
-    subprocess.call("rm -r /home/pi/sunrise300/images/*.jpg", shell=True)
-    subprocess.call("rm -r /home/pi/sunrise300/*.mp4", shell=True)
+    # subprocess.call("rm -r /home/pi/sunrise300/images/*.jpg", shell=True)
+    # subprocess.call("rm -r /home/pi/sunrise300/*.mp4", shell=True)
 
 if __name__ == "__main__":
 
