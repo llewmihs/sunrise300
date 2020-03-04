@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "Hello world"
+python3 /home/pi/sunrise300/ping.py
