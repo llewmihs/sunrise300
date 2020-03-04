@@ -5,9 +5,6 @@ import subprocess # to run file cleanup after the upload
 
 # Define callback functions which will be called when certain events happen.
 def connected(client):
-    # Connected function will be called when the client is connected to Adafruit IO.
-    # This is a good place to subscribe to feed changes.  The client parameter
-    # passed to this function is the Adafruit IO MQTT client so you can make
     # calls against it easily.
     print ('Connected to Adafruit IO!  Listening for feed changes...')
     # Subscribe to the three pi-dashboard feeds that will be displayed on the
