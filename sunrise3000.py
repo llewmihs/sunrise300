@@ -80,6 +80,7 @@ def cron_update(timelapse_start):
 def clean_up():
     # subprocess.call("rm -r /home/pi/sunrise300/images/*.jpg", shell=True)
     # subprocess.call("rm -r /home/pi/sunrise300/*.mp4", shell=True)
+    print("Panys")
 
 if __name__ == "__main__":
 
