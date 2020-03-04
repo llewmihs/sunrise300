@@ -84,9 +84,10 @@ def start_time():
 
 def cron_update(timelapse_start):
     my_cron = CronTab(user='pi')
-    my_cron.remove_all()    # clear current crontab
+    cron.remove_all(comment='foo')
+    #my_cron.remove_all()    # clear current crontab
     # set the cron job to run in the background
-    job = my_cron.new(command='nohup python3 /home/pi/sunrise300/sunrise3000.py &')
+    job = my_cron.new(command='nohup python3 /home/pi/sunrise300/sunrise3000.py &', comment='foo')
     job.hour.on(timelapse_start.hour)
     job.minute.on(timelapse_start.minute)
     my_cron.write() #write the job to the crontab
@@ -107,19 +108,21 @@ if __name__ == "__main__":
     push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
     print(total_frames, delay)
     
+    the_camera(15, 1)
     the_camera(total_frames, delay)
     
     vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
     the_lapser(vid_file)
     dropbox_uploader(vid_file)
-    try:
-        if len(sys.argv) == 1:
+    
+    if len(sys.argv) > 1:
+        print("Test run, not uploading")
+    else:
+        try:
             upload_to_twitter(vid_file)
-        else:
-            print("Test run, not uploading")
-    except:
-        push = pb.push_note("Failed upload","Go away and cry")
-        print("Failed")
+        except:
+            push = pb.push_note("Failed upload","Go away and cry")
+   
     push = pb.push_note("The upload has ended","Double Woop")
     lapse_start_time = start_time()
     cron_update(lapse_start_time)
