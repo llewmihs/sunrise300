@@ -42,7 +42,6 @@ def lapse_details(duration_in_minutes):
     frame_rate = 15
     total_frames = film_length * frame_rate
     delay = real_time / total_frames
-    #return 1, 2
     return total_frames, delay
 
 def the_camera(no_of_frames, delay):
@@ -98,19 +97,15 @@ if __name__ == "__main__":
 
     now = strftime("%Y%m%d-%H%M%S") # get the start time of the programme
 
-    total_frames, delay = lapse_details(60)
+    if len(sys.argv) > 1:
+        total_frames, delay = lapse_details(int(sys.argv[1]))
+    else:
+        total_frames, delay = lapse_details(60)
     
     push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
     print(total_frames, delay)
     
-    if len(sys.argv) > 1:
-        no_frames = int(sys.argv[1])
-        delay_time = int(sys.argv[2])
-        print(f"test script frames = {no_frames} with delay = {delay_time}")
-        the_camera(no_frames, delay_time)
-    else:
-        print(f"test script frames = {total_frames}")
-        the_camera(total_frames, delay)
+    the_camera(total_frames, delay)
     
     vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
     the_lapser(vid_file)
