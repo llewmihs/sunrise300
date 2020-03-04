@@ -97,7 +97,8 @@ if __name__ == "__main__":
     now = strftime("%Y%m%d-%H%M%S") # get the start time of the programme
 
     total_frames, delay = lapse_details(60)
-    push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
+    
+    #push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
     print(total_frames, delay)
     
     if len(sys.argv) > 1:
@@ -118,8 +119,9 @@ if __name__ == "__main__":
         else:
             print("Test run, not uploading")
     except:
-        push = pb.push_note("Failed upload","Go away and cry")
-    push = pb.push_note("The upload has ended","Double Woop")
+        #push = pb.push_note("Failed upload","Go away and cry")
+        print("Failed")
+    #push = pb.push_note("The upload has ended","Double Woop")
     lapse_start_time = start_time()
     cron_update(lapse_start_time)
 
