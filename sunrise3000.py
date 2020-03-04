@@ -52,6 +52,7 @@ def the_camera(no_of_frames, delay):
         #create timestamp filename
         file_path = "/home/pi/sunrise300/images/" + 'IMAGE_' '{0:04d}'.format(i)+".JPG"
         camera.capture(file_path)
+        
         sleep(delay)
     camera.stop_preview()
 
