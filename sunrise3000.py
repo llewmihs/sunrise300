@@ -19,6 +19,8 @@ from crontab import CronTab     # so that we can write to the crontab at the end
 from astral import LocationInfo     # to get the location info `pip3 install astral`
 from astral.sun import sun          # to get the sunrise time
 
+import progressbar
+
 import sys # for argv testing
 
 # now the initial set-up: Dropbox and Pushbullet
@@ -47,7 +49,7 @@ def lapse_details(duration_in_minutes):
 def the_camera(no_of_frames, delay):
     camera.start_preview()
     sleep(2) # Camera warm-up time
-    for i in range(no_of_frames):
+    for i in progressbar.progressbar(range(no_of_frames)):
         #create timestamp filename
         file_path = "/home/pi/sunrise300/images/" + 'IMAGE_' '{0:04d}'.format(i)+".JPG"
         camera.capture(file_path)
