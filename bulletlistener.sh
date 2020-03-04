@@ -1,3 +1,3 @@
 #!/bin/bash
-
-python3 /home/pi/sunrise300/ping.py
+cd /home/pi/sunrise300
+pblisten --exec ping.py --key-file creds.txt --throttle-count 1 --throttle-seconds 10
