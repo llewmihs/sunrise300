@@ -56,6 +56,7 @@ def the_camera(no_of_frames, delay):
     camera.stop_preview()
 
 def the_lapser(vid_file):
+    vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
     subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -preset veryslow -crf 17 {vid_file}", shell=True)
 
 def upload_to_twitter(vid_file):
