@@ -101,8 +101,10 @@ if __name__ == "__main__":
     print(total_frames, delay)
     
     if len(sys.argv) > 1:
-        print("test script frames = 15")
-        the_camera(15, 1)
+        no_frames = int(sys.argv[1])
+        delay_time = int((sys.argv[2])
+        print(f"test script frames = {no_frames} with delay = {delay_time}")
+        the_camera(no_frames, delay_time)
     else:
         print(f"test script frames = {total_frames}")
         the_camera(total_frames, delay)
