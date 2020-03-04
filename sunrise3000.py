@@ -30,7 +30,7 @@ camera = PiCamera()
 camera.resolution = (1640, 1232)
 
 def lapse_details(duration_in_minutes):
-    real_time = duration * 60 # minutes * 60 seconds
+    real_time = duration_in_minutes * 60 # minutes * 60 seconds
     film_length = 30
     frame_rate = 15
     total_frames = film_length * frame_rate
