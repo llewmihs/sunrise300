@@ -74,7 +74,7 @@ def start_time():
     s = sun(city.observer, date=datetime.date(datetime.now())+timedelta(days=1))
     sunrise_time = s['sunrise']   
     # timelapse shoudl start 1 hour prior
-    timelapse_start = sunrise_time - timedelta(minutes=60)
+    timelapse_start = sunrise_time - timedelta(minutes=40)
     return timelapse_start
 
 def cron_update(timelapse_start):
@@ -88,8 +88,7 @@ def cron_update(timelapse_start):
 
 def clean_up():
     subprocess.call("rm -r /home/pi/sunrise300/images/*.JPG", shell=True)
-    # subprocess.call("rm -r /home/pi/sunrise300/*.mp4", shell=True)
-    print("Panys")
+    subprocess.call("rm -r /home/pi/sunrise300/*.mp4", shell=True)
 
 if __name__ == "__main__":
 
@@ -99,8 +98,8 @@ if __name__ == "__main__":
     push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
     print(total_frames, delay)
         
-    the_camera(15, 1)
-    #the_camera(total_frames, delay)
+    #the_camera(15, 1)
+    the_camera(total_frames, delay)
     
     vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
     the_lapser(vid_file)
@@ -108,7 +107,7 @@ if __name__ == "__main__":
     try:
         upload_to_twitter(vid_file)
     except:
-        print("Failed upload")
+        push = pb.push_note("Failed upload","Go away and cry")
     push = pb.push_note("The upload has ended","Double Woop")
     lapse_start_time = start_time()
     cron_update(lapse_start_time)
