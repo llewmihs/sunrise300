@@ -52,13 +52,13 @@ def the_camera(no_of_frames, delay):
         #create timestamp filename
         file_path = "/home/pi/sunrise300/images/" + 'IMAGE_' '{0:04d}'.format(i)+".JPG"
         camera.capture(file_path)
-        
+
         sleep(delay)
     camera.stop_preview()
 
 def the_lapser(vid_file):
-    vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
-    subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -preset veryslow -crf 17 {vid_file}", shell=True)
+    video = vid_file
+    subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -preset veryslow -crf 17 {video}", shell=True)
 
 def upload_to_twitter(vid_file):
     video = open(f'{vid_file}', 'rb')
@@ -100,7 +100,7 @@ if __name__ == "__main__":
 
     total_frames, delay = lapse_details(60)
     
-    #push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
+    push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
     print(total_frames, delay)
     
     if len(sys.argv) > 1:
@@ -121,9 +121,9 @@ if __name__ == "__main__":
         else:
             print("Test run, not uploading")
     except:
-        #push = pb.push_note("Failed upload","Go away and cry")
+        push = pb.push_note("Failed upload","Go away and cry")
         print("Failed")
-    #push = pb.push_note("The upload has ended","Double Woop")
+    push = pb.push_note("The upload has ended","Double Woop")
     lapse_start_time = start_time()
     cron_update(lapse_start_time)
 
