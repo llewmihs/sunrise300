@@ -101,15 +101,17 @@ if __name__ == "__main__":
     now = strftime("%Y%m%d-%H%M%S") # get the start time of the programme
 
     if len(sys.argv) > 1:
+        print("Args")
         total_frames, delay = lapse_details(int(sys.argv[1]))
     else:
+        print("No args")
         total_frames, delay = lapse_details(60)
     
     push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
     print(total_frames, delay)
     
     the_camera(15, 1)
-    the_camera(total_frames, delay)
+    #the_camera(total_frames, delay)
     
     vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
     the_lapser(vid_file)
