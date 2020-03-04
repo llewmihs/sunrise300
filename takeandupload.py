@@ -24,7 +24,7 @@ def upload_to_dropbox(file_path):
     print(f"Uploading photo {file_path}")
     with open(file_path, "rb") as f:
         print(f"Trying file {file_path}")
-        dbx.files_upload(f.read(), file_path, mute = True)
+        dbx.files_upload(f.read(), "/"+file_path, mute = True)
     print("Successfully uploaded")
 
 if __name__ == "__main__":
