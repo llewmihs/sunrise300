@@ -2,6 +2,9 @@
 from Adafruit_IO import MQTTClient
 from config import *
 import subprocess # to run file cleanup after the upload
+from pushbullet import Pushbullet
+
+pb = Pushbullet(PUSHBULLET)
 
 # Define callback functions which will be called when certain events happen.
 def connected(client):
@@ -21,6 +24,7 @@ def message(client, feed_id, payload):
     # The feed_id parameter identifies the feed, and the payload parameter has
     # the new value.
     print('Feed {0} received new value: {1}'.format(feed_id, payload))
+    push = pb.push_note("Somebody pushed", "the button")
     subprocess.call(f"python3 sunrise3000.py 15", shell=True)
     print("Worked?")
 
