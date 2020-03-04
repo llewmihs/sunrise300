@@ -13,6 +13,7 @@ from datetime import datetime, timedelta       # possbily not needed but used to
 from picamera import PiCamera # raspberry pi camera
 
 import subprocess # to run file cleanup after the upload
+from twython import Twython # pip3 install twython
 
 from crontab import CronTab     # so that we can write to the crontab at the end of each day `pip3 install python-crontab`
 from astral import LocationInfo     # to get the location info `pip3 install astral`
@@ -28,6 +29,10 @@ now = strftime("%Y%m%d")
 # the Picamera
 camera = PiCamera()
 camera.resolution = (1640, 1232)
+
+# Twython setup
+twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
+
 
 def lapse_details(duration_in_minutes):
     real_time = duration_in_minutes * 60 # minutes * 60 seconds
