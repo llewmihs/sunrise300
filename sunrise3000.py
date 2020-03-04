@@ -51,6 +51,10 @@ def the_camera(no_of_frames, delay):
 def the_lapser(vid_file):
     subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -pix_fmt yuv420p {vid_file}", shell=True)
 
+def upload_to_twitter(vid_file):
+    video = open(f'{vid_file}', 'rb')
+    response = twitter.upload_video(media=video, media_type='video/mp4')
+    twitter.update_status(status="Here's this morning's sunrise...", media_ids=[response['media_id']])
 
 def dropbox_uploader(filename):
     with open(filename, "rb") as f:
@@ -96,6 +100,10 @@ if __name__ == "__main__":
     vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
     the_lapser(vid_file)
     dropbox_uploader(vid_file)
+    try:
+        upload_to_twitter(vid_file)
+    except:
+        print("Failed upload")
     push = pb.push_note("The upload has ended","Double Woop")
     lapse_start_time = start_time()
     cron_update(lapse_start_time)
