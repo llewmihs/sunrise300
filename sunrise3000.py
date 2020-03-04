@@ -110,8 +110,8 @@ if __name__ == "__main__":
     push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
     print(total_frames, delay)
     
-    the_camera(15, 1)
-    #the_camera(total_frames, delay)
+    #the_camera(15, 1)
+    the_camera(total_frames, delay)
     
     vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
     the_lapser(vid_file)
