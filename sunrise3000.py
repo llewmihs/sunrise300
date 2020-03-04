@@ -19,8 +19,6 @@ from crontab import CronTab     # so that we can write to the crontab at the end
 from astral import LocationInfo     # to get the location info `pip3 install astral`
 from astral.sun import sun          # to get the sunrise time
 
-import logging  #create a logfile for debug purposes https://www.geeksforgeeks.org/logging-in-python/
-
 # now the initial set-up: Dropbox and Pushbullet
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
 from pushbullet import Pushbullet
@@ -28,14 +26,11 @@ pb = Pushbullet(PUSHBULLET)
 
 now = strftime("%Y%m%d")
 
-logging.basicConfig(filename='sunrise3000.log', filemode='a', format='%(asctime)s %(message)s',level=logging.INFO)
-logging.info(f'Script ran at {now}')
-
 # the Picamera
 camera = PiCamera()
 camera.resolution = (1640, 1232)
 
-def lapse_details(duration):
+def lapse_details(duration_in_minutes):
     real_time = duration * 60 # minutes * 60 seconds
     film_length = 30
     frame_rate = 15
@@ -54,13 +49,11 @@ def the_camera(no_of_frames, delay):
         sleep(delay)
     camera.stop_preview()
 
-def the_lapser():
-    vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d") + ".mp4"
-    subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/minilapse/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -pix_fmt yuv420p {vid_file}", shell=True)
-    return(vid_file)
+def the_lapser(vid_file):
+    subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -pix_fmt yuv420p {vid_file}", shell=True)
+
 
 def dropbox_uploader(filename):
-    # files = glob('/home/pi/sunrise300/*.mov')
     with open(filename, "rb") as f:
         print(f"Trying file {filename}")
         dbx.files_upload(f.read(), filename, mute = True)
@@ -79,7 +72,6 @@ def start_time():
 def cron_update(timelapse_start):
     my_cron = CronTab(user='pi')
     my_cron.remove_all()    # clear current crontab
-    
     # set the cron job to run in the background
     job = my_cron.new(command='nohup python3 /home/pi/sunrise300/sunrise3000.py &')
     job.hour.on(timelapse_start.hour)
@@ -88,31 +80,30 @@ def cron_update(timelapse_start):
 
 def clean_up():
     subprocess.call("rm -r /home/pi/sunrise300/images/*.jpg", shell=True)
-    subprocess.call("rm -r /home/pi/sunrise300/*.mov", shell=True)
+    subprocess.call("rm -r /home/pi/sunrise300/*.mp4", shell=True)
 
 if __name__ == "__main__":
 
     now = strftime("%Y%m%d-%H%M%S") # get the start time of the programme
-    push = pb.push_note(f"The Timelapse Has Started at {now}", "Fun times")
     
     try:
         total_frames, delay = lapse_details(60)
+        push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
         print(total_frames, delay)
-        # the_camera(45, 1)
+        the_camera(30, 1)
         the_camera(total_frames, delay)
+        vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d") + ".mp4"
         the_lapser()
-        dropbox_uploader()
+        dropbox_uploader(vid_file)
         push = pb.push_note("The upload has ended","Double Woop")
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
 
         # get the start time of the programme
         end = strftime("%Y%m%d-%H%M%S")
-
-        logging.info(f'Script succesfully completed at {end}')
     except:
-        logging.info('The script failed to execute')
+        print('The script failed to execute')
     finally:
         clean_up()
-        logging.info('*** *** *** *** *** *** *** ***')
+
     
