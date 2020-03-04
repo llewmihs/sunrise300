@@ -30,7 +30,8 @@ camera = PiCamera()
 camera.resolution = (1640, 1232)
 
 def lapse_details(duration_in_minutes):
-    real_time = duration_in_minutes * 60 # minutes * 60 seconds
+    real_time = duration_in_minutes
+     * 60 # minutes * 60 seconds
     film_length = 30
     frame_rate = 15
     total_frames = film_length * frame_rate
@@ -94,7 +95,7 @@ if __name__ == "__main__":
     #the_camera(total_frames, delay)
     
     vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d") + ".mp4"
-    the_lapser()
+    the_lapser(vid_file)
     dropbox_uploader(vid_file)
     push = pb.push_note("The upload has ended","Double Woop")
     lapse_start_time = start_time()
