@@ -97,39 +97,53 @@ def clean_up():
     subprocess.call("rm -r /home/pi/sunrise300/*.mp4", shell=True)
 
 if __name__ == "__main__":
-
+    
+    clean_up()
+    
     now = strftime("%Y%m%d-%H%M%S") # get the start time of the programme
 
     if len(sys.argv) > 1:
         print("Args")
         total_frames, delay = lapse_details(int(sys.argv[1]))
+        push = pb.push_note(f"A FALSE Timelapse Has Started at {now}.", "This is running as a test.")
     else:
         print("No args")
         total_frames, delay = lapse_details(60)
-    
-    push = pb.push_note(f"The Timelapse Has Started at {now}", f"Total frames: {total_frames}, delay: {delay}")
+        push = pb.push_note(f"A TRUE Timelapse Has Started at {now}.", "Happy lapsing.")
+
     print(total_frames, delay)
     
-    #the_camera(15, 1)
-    the_camera(total_frames, delay)
+    try:
+        the_camera(total_frames, delay)
+        push = pb.push_note("PiCamera Session Successful", "Well done.")
+    except:
+        push = pb.push_note("There was a failure with the camera.", "Uh oh")
     
     vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
-    the_lapser(vid_file)
-    dropbox_uploader(vid_file)
     
+    try:
+        the_lapser(vid_file)
+        push = pb.push_note("FFMPEG Timelapse Successful", "Well done.")
+    except:
+        push = pb.push_note("There was a failure with the FFMPEG lapse.", "Uh oh")
+    
+    try:
+        dropbox_uploader(vid_file)
+        push = pb.push_note("Dropbox Upload Successful", "Well done.")
+    except:
+        push = pb.push_note("There was a failure with the Dropbox Upload.", "Uh oh")
+
     if len(sys.argv) > 1:
         print("Test run, not uploading")
     else:
         try:
             upload_to_twitter(vid_file)
+            push = pb.push_note("Dropbox Upload Successful", "Well done.")
         except:
             push = pb.push_note("Failed upload","Go away and cry")
-   
-    push = pb.push_note("The upload has ended","Double Woop")
-    lapse_start_time = start_time()
-    cron_update(lapse_start_time)
+    finally:
+        lapse_start_time = start_time()
+        cron_update(lapse_start_time)
 
-
-    clean_up()
 
     
