@@ -26,7 +26,7 @@ import sys # for argv testing
 # now the initial set-up: Dropbox and Pushbullet
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
 from pushbullet import Pushbullet
-pb = Pushbullet(PUSHBULLET)
+global pb = Pushbullet(PUSHBULLET)
 
 now = strftime("%Y%m%d")
 
@@ -59,18 +59,28 @@ def the_camera(no_of_frames, delay):
 
 def the_lapser(vid_file):
     video = vid_file
-    subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -preset veryslow -crf 17 {video}", shell=True)
+    try:
+        subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -preset veryslow -crf 17 {video}", shell=True)
+        push = pb.push_note("FFMPEG Timelapse Successful", "Well done.")
+    except:
+        push = pb.push_note("There was a failure with the FFMPEG lapse.", "Uh oh")
 
 def upload_to_twitter(vid_file):
-    video = open(f'{vid_file}', 'rb')
-    response = twitter.upload_video(media=video, media_type='video/mp4')
-    twitter.update_status(status="Here's this morning's sunrise...", media_ids=[response['media_id']])
+    try:
+        video = open(f'{vid_file}', 'rb')
+        response = twitter.upload_video(media=video, media_type='video/mp4')
+        twitter.update_status(status="Here's this morning's sunrise...", media_ids=[response['media_id']])
+    except:
+        push = pb.push_note("There was a failure with the Twitter Upload.", "Uh oh")
 
 def dropbox_uploader(filename):
-    with open(filename, "rb") as f:
-        print(f"Trying file {filename}")
-        dbx.files_upload(f.read(), filename, mute = True)
-    print("Successfully uploaded")
+    try:
+        with open(filename, "rb") as f:
+            print(f"Trying file {filename}")
+            dbx.files_upload(f.read(), filename, mute = True)
+        push = pb.push_note("Dropbox Upload Successful", "Well done.")
+    except:
+        push = pb.push_note("There was a failure with the Dropbox Upload.", "Uh oh")
 
 def start_time():
     # set Astral location for Whitley Bay
@@ -110,37 +120,21 @@ if __name__ == "__main__":
         print("No args")
         total_frames, delay = lapse_details(60)
         push = pb.push_note(f"A TRUE Timelapse Has Started at {now}.", "Happy lapsing.")
+ 
+    the_camera(total_frames, delay)
 
-    print(total_frames, delay)
-    
-    try:
-        the_camera(total_frames, delay)
-        push = pb.push_note("PiCamera Session Successful", "Well done.")
-    except:
-        push = pb.push_note("There was a failure with the camera.", "Uh oh")
-    
     vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
+  
+    the_lapser(vid_file)
+
+    dropbox_uploader(vid_file)
     
-    try:
-        the_lapser(vid_file)
-        push = pb.push_note("FFMPEG Timelapse Successful", "Well done.")
-    except:
-        push = pb.push_note("There was a failure with the FFMPEG lapse.", "Uh oh")
-    
-    try:
-        dropbox_uploader(vid_file)
-        push = pb.push_note("Dropbox Upload Successful", "Well done.")
-    except:
-        push = pb.push_note("There was a failure with the Dropbox Upload.", "Uh oh")
 
     if len(sys.argv) > 1:
         print("Test run, not uploading")
     else:
-        try:
-            upload_to_twitter(vid_file)
-            push = pb.push_note("Dropbox Upload Successful", "Well done.")
-        except:
-            push = pb.push_note("Failed upload","Go away and cry")
+        upload_to_twitter(vid_file)
+
     finally:
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
