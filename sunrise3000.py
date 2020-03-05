@@ -124,17 +124,16 @@ if __name__ == "__main__":
     the_camera(total_frames, delay)
 
     vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
-  
-    the_lapser(vid_file)
+    try:
+        the_lapser(vid_file)
 
-    dropbox_uploader(vid_file)
+        dropbox_uploader(vid_file)
     
 
-    if len(sys.argv) > 1:
-        print("Test run, not uploading")
-    else:
-        upload_to_twitter(vid_file)
-
+        if len(sys.argv) > 1:
+            print("Test run, not uploading")
+        else:
+            upload_to_twitter(vid_file)
     finally:
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
