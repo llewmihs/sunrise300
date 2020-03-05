@@ -26,7 +26,7 @@ import sys # for argv testing
 # now the initial set-up: Dropbox and Pushbullet
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
 from pushbullet import Pushbullet
-global pb = Pushbullet(PUSHBULLET)
+pb = Pushbullet(PUSHBULLET)
 
 now = strftime("%Y%m%d")
 
