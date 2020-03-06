@@ -134,10 +134,10 @@ if __name__ == "__main__":
 
         dropbox_uploader(glob_file)
     
-        if len(sys.argv) > 1:
-            print("Test run, not uploading")
-        else:
-            upload_to_twitter(glob_file)
+        # if len(sys.argv) > 1:
+        #     print("Test run, not uploading")
+        # else:
+        #     upload_to_twitter(glob_file)
     finally:
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
