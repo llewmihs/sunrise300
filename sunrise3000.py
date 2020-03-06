@@ -18,6 +18,7 @@ from twython import Twython # pip3 install twython
 from crontab import CronTab     # so that we can write to the crontab at the end of each day `pip3 install python-crontab`
 from astral import LocationInfo     # to get the location info `pip3 install astral`
 from astral.sun import sun          # to get the sunrise time
+from glob import glob # for the file upload process
 
 import progressbar
 
@@ -127,13 +128,14 @@ if __name__ == "__main__":
     try:
         the_lapser(vid_file)
 
-        dropbox_uploader(vid_file)
-    
+        glob_file = glob("/home/pi/sunrise300/*.mp4")[0]
 
+        dropbox_uploader(glob_file)
+    
         if len(sys.argv) > 1:
             print("Test run, not uploading")
         else:
-            upload_to_twitter(vid_file)
+            upload_to_twitter(glob_file)
     finally:
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
