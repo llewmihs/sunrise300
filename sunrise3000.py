@@ -106,11 +106,14 @@ def cron_update(timelapse_start):
     my_cron.write() #write the job to the crontab
 
 def clean_up():
-    subprocess.call("rm -r /home/pi/sunrise300/images/*.JPG", shell=True)
-    subprocess.call("rm -r /home/pi/sunrise300/*.mp4", shell=True)
+    try:
+        subprocess.call("rm -r /home/pi/sunrise300/images/*.JPG", shell=True)
+        subprocess.call("rm -r /home/pi/sunrise300/*.mp4", shell=True)
+    except:
+        pass
 
 if __name__ == "__main__":
-    
+
     clean_up()
     
     now = strftime("%Y%m%d-%H%M%S") # get the start time of the programme
