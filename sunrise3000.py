@@ -120,8 +120,8 @@ if __name__ == "__main__":
 
     if len(sys.argv) > 1:
         print("Args")
-        total_frames = lapse_details(int(sys.argv[1]))
-        delay = lapse_details(int(sys.argv[2]))
+        total_frames = int(sys.argv[1])
+        delay = int(sys.argv[2])
         push = pb.push_note(f"A FALSE Timelapse Has Started at {now}.", "This is running as a test.")
     else:
         print("No args")
