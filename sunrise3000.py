@@ -31,6 +31,8 @@ pb = Pushbullet(PUSHBULLET)
 
 now = strftime("%Y%m%d")
 
+vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
+
 # the Picamera
 camera = PiCamera()
 camera.resolution = (1640, 1232)
@@ -124,7 +126,7 @@ if __name__ == "__main__":
  
     the_camera(total_frames, delay)
 
-    vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
+    
     try:
         the_lapser(vid_file)
 
