@@ -9,6 +9,7 @@ from config import *    # my dropbox API key and Push bullet API key
 
 from time import sleep, strftime # for the picamera and to name the files
 from datetime import datetime, timedelta       # possbily not needed but used to get the sunrise for today
+import os.path
 
 from picamera import PiCamera # raspberry pi camera
 
@@ -22,7 +23,14 @@ from glob import glob # for the file upload process
 
 import progressbar
 
+saveout = sys.stdout   
+logfile = strftime("%d %B - %H %M") + ".log"                              
+fsock = open(logfile, 'w') 
+sys.stdout = fsock 
+
 import sys # for argv testing
+
+from PIL import Image 
 
 # now the initial set-up: Dropbox and Pushbullet
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
@@ -40,8 +48,20 @@ camera.resolution = (1640, 1232)
 # Twython setup
 twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
+def the_cropper():
+    # Setting the points for cropped image 
+    left = 0
+    upper = 0
+    right = 1640
+    lower = 923
+    file_list = glob("/home/pi/sunrise300/images/*.jpg")
+    for i in len(file_list):
+        im = Image.open(file_list[i])
+        im = im.crop((left, upper, right, lower))
+        im.save(file_list[i])
 
 def lapse_details(duration_in_minutes, fps):
+    print(f"User lapse duration request: {duration_in_minutes} minutes.")
     real_time = duration_in_minutes * 60 # minutes * 60 seconds
     film_length = 30
     frame_rate = fps
@@ -50,23 +70,39 @@ def lapse_details(duration_in_minutes, fps):
     return total_frames, delay
 
 def the_camera(no_of_frames, delay):
+    start_time = strftime("%H:%M:%S")
+    print(f"The camera began taking images at {start_time}")
     camera.start_preview()
     sleep(2) # Camera warm-up time
     for i in progressbar.progressbar(range(no_of_frames)):
         #create timestamp filename
         file_path = "/home/pi/sunrise300/images/" + 'IMAGE_' '{0:04d}'.format(i)+".JPG"
         camera.capture(file_path)
-
         sleep(delay)
+    end_time = strftime("%H:%M:%S")
+    print(f"The camera took {range(no_of_frames)} images.")
+    print(f"The camera ENDED taking images at {end_time}")
+    print(".........................................................")
+    print("")
+
     camera.stop_preview()
 
 def the_lapser(vid_file, fps):
     video = vid_file
     frames = fps
-    try:
-        subprocess.call(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -preset veryslow -crf 17 {video}", shell=True)
+    print(f"Attempting to compile video file - < {video} > - using FFMPEG")
+    print("***************************************************************")
+    print("")
+    
+    subprocess.call(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -preset veryslow -crf 17 {video}", shell=True)
+
+    if os.path.exists(video):
+        print(f"SUCCESS - FFMPEG created the video file: {video}")
         push = pb.push_note("FFMPEG Timelapse Successful", "Well done.")
-    except:
+    else:
+        print(f"ERROR - FFMPEG failed to create the video file: {video}")
+        print(f"Programme exiting early")
+        sys.exit()
         push = pb.push_note("There was a failure with the FFMPEG lapse.", "Uh oh")
 
 def upload_to_twitter(vid_file):
@@ -117,19 +153,27 @@ if __name__ == "__main__":
 
     clean_up()
     
-    now = strftime("%Y%m%d-%H%M%S") # get the start time of the programme
+    now = strftime("%Y %B %d - %H %M %S") # get the start time of the programme
+    print("------------------ Timelapse 3000 Logfile ------------------ ")
+    print("Runtime: " + now )
+    print(".........................................................")
+    print("")
 
     if len(sys.argv) > 1:
-        print("Args")
+        print("MANUAL EXECUTION")
         real_time = int(sys.argv[1])
-        total_frames, delay = lapse_details(real_time)
         fps = int(sys.argv[2])
-        push = pb.push_note(f"A {real_time} minutes timelapse Has Started at {now}.", f"Total frames: {total_frames}. Delay: {delay}. FPS. {fps}")
     else:
-        print("No args")
-        total_frames, delay = lapse_details(60)
+        print("AUTOMATIC EXECUTION")
+        real_time = 60
         fps = 15
-        push = pb.push_note(f"A TRUE Timelapse Has Started at {now}.", "Happy lapsing.")
+    print(f" - Total timelapse duration is: {real_time} minutes.")
+    print(f" - Output framerate  is: {fps} fps.")        
+    total_frames, delay = lapse_details(real_time, fps)
+    print(f"** Programme set to take {total_frames} images, with a {delay} second delay.**")
+    print(".........................................................")
+    print("")
+    push = pb.push_note(f"A {real_time} minutes timelapse Has Started at {now}.", f"Total frames: {total_frames}. Delay: {delay}. FPS. {fps}")
  
     the_camera(total_frames, delay)
 
@@ -148,6 +192,8 @@ if __name__ == "__main__":
     finally:
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
+        sys.stdout = saveout                                     6
+        fsock.close()
 
 
     
