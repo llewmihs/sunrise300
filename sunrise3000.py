@@ -41,10 +41,10 @@ camera.resolution = (1640, 1232)
 twitter = Twython(APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
 
 
-def lapse_details(duration_in_minutes):
+def lapse_details(duration_in_minutes, fps):
     real_time = duration_in_minutes * 60 # minutes * 60 seconds
     film_length = 30
-    frame_rate = 15
+    frame_rate = fps
     total_frames = film_length * frame_rate
     delay = real_time / total_frames
     return total_frames, delay
