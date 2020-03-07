@@ -60,10 +60,11 @@ def the_camera(no_of_frames, delay):
         sleep(delay)
     camera.stop_preview()
 
-def the_lapser(vid_file):
+def the_lapser(vid_file, fps):
     video = vid_file
+    frames = fps
     try:
-        subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -preset veryslow -crf 17 {video}", shell=True)
+        subprocess.call(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -preset veryslow -crf 17 {video}", shell=True)
         push = pb.push_note("FFMPEG Timelapse Successful", "Well done.")
     except:
         push = pb.push_note("There was a failure with the FFMPEG lapse.", "Uh oh")
@@ -122,17 +123,19 @@ if __name__ == "__main__":
         print("Args")
         real_time = int(sys.argv[1])
         total_frames, delay = lapse_details(real_time)
-        push = pb.push_note(f"A {real_time} minutes timelapse Has Started at {now}.", f"Total frames: {total_frames}. Delay: {delay}")
+        fps = int(sys.argv[2])
+        push = pb.push_note(f"A {real_time} minutes timelapse Has Started at {now}.", f"Total frames: {total_frames}. Delay: {delay}. FPS. {fps}")
     else:
         print("No args")
         total_frames, delay = lapse_details(60)
+        fps = 15
         push = pb.push_note(f"A TRUE Timelapse Has Started at {now}.", "Happy lapsing.")
  
     the_camera(total_frames, delay)
 
     
     try:
-        the_lapser(vid_file)
+        the_lapser(vid_file, fps)
 
         glob_file = glob("/home/pi/sunrise300/*.mp4")[0]
 
