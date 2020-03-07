@@ -13,7 +13,7 @@ from datetime import datetime, timedelta       # possbily not needed but used to
 from picamera import PiCamera # raspberry pi camera
 
 import subprocess # to run file cleanup after the upload
-from twython import Twython # pip3 install twython
+from twython import Twython, TwythonError # pip3 install twython
 
 from crontab import CronTab     # so that we can write to the crontab at the end of each day `pip3 install python-crontab`
 from astral import LocationInfo     # to get the location info `pip3 install astral`
@@ -73,8 +73,8 @@ def upload_to_twitter(vid_file):
         video = open(f'{vid_file}', 'rb')
         response = twitter.upload_video(media=video, media_type='video/mp4')
         twitter.update_status(status="Here's this morning's sunrise...", media_ids=[response['media_id']])
-    except:
-        push = pb.push_note("There was a failure with the Twitter Upload.", "Uh oh")
+    except TwythonError as e:
+        push = pb.push_note("There was a failure with the Twitter Upload.", e)
 
 def dropbox_uploader(filename):
     try:
