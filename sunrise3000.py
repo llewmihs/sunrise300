@@ -94,7 +94,7 @@ def the_lapser(vid_file, fps):
     print("***************************************************************")
     print("")
     
-    subprocess.call(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset veryslow -crf 17 {video}", shell=True)
+    subprocess.run(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset veryslow -crf 17 {video}", capture_output=True)
 
     if os.path.exists(video) and os.path.getsize(video) > 4000000: # has the file been written, and is it of a decent size?
         print(f"SUCCESS - FFMPEG created the video file: {video}")
