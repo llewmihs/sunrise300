@@ -80,7 +80,7 @@ def the_camera(no_of_frames, delay):
         camera.capture(file_path)
         sleep(delay)
     end_time = strftime("%H:%M:%S")
-    print(f"The camera took {len(no_of_frames)} images.")
+    print(f"The camera took {(no_of_frames)} images.")
     print(f"The camera ENDED taking images at {end_time}")
     print(".........................................................")
     print("")
@@ -138,6 +138,8 @@ def dropbox_uploader(filename):
     except:
         push = pb.push_note("There was a failure with the Dropbox Upload.", "Uh oh")
         print("FAILED")
+    print("***************************************************************")
+    print("")
 
 def start_time():
     # set Astral location for Whitley Bay
