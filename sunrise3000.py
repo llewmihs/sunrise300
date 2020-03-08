@@ -30,7 +30,7 @@ import progressbar
 
 import sys # for argv testing
 
-from PIL import Image 
+from PIL import Image #python3 -m pip install Pillow, also need: sudo apt-get install libopenjp2-7, sudo apt install libtiff5
 
 # now the initial set-up: Dropbox and Pushbullet
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
@@ -55,10 +55,10 @@ def the_cropper():
     right = 1640
     lower = 923
     file_list = glob("/home/pi/sunrise300/images/*.jpg")
-    for i in len(file_list):
-        im = Image.open(file_list[i])
+    for names in file_list:
+        im = Image.open(names)
         im = im.crop((left, upper, right, lower))
-        im.save(file_list[i])
+        im.save(names)
 
 def lapse_details(duration_in_minutes, fps):
     print(f"User lapse duration request: {duration_in_minutes} minutes.")
@@ -106,21 +106,36 @@ def the_lapser(vid_file, fps):
         push = pb.push_note("There was a failure with the FFMPEG lapse.", "Uh oh")
 
 def upload_to_twitter(vid_file):
+    print("Twython will now upload the mp4 time lapse to Twitter.")
     try:
+        print(f"Opening the video file -> {vid_file}    ", end = '')
         video = open(f'{vid_file}', 'rb')
+        print("Success")
+        print("Getting response from Twitter using credentials ->   ", end = '')
         response = twitter.upload_video(media=video, media_type='video/mp4')
+        print("Success")
+        print("Uploading Tweet ->   ", end = '')
         twitter.update_status(status="Here's this morning's sunrise...", media_ids=[response['media_id']])
+        print("Success")
     except TwythonError as e:
+        print("There was an error...")
+        print(e)
         push = pb.push_note("There was a failure with the Twitter Upload.", e)
+    print("***************************************************************")
+    print("")
 
 def dropbox_uploader(filename):
+    print(f"Twython will now upload the mp4 time lapse: {filename} to Dropbox.")
     try:
         with open(filename, "rb") as f:
             print(f"Trying file {filename}")
+            print(f"Uploading now ->    ", end='')
             dbx.files_upload(f.read(), filename, mute = True)
+            print("SUCCESS")
         push = pb.push_note("Dropbox Upload Successful", "Well done.")
     except:
         push = pb.push_note("There was a failure with the Dropbox Upload.", "Uh oh")
+        print("FAILED")
 
 def start_time():
     # set Astral location for Whitley Bay
