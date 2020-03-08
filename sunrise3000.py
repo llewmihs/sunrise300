@@ -54,7 +54,7 @@ def the_cropper():
     upper = 0
     right = 1640
     lower = 922
-    file_list = glob("/home/pi/sunrise300/images/*.jpg")
+    file_list = glob("/home/pi/sunrise300/images/*.JPG")
     for names in file_list:
         im = Image.open(names)
         im = im.crop((left, upper, right, lower))
