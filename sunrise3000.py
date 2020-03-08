@@ -7,7 +7,7 @@ import dropbox      # for uploading to dropbox, `pip3 install dropbox`
 from pushbullet import Pushbullet   # notification software to monitor the programme remotely `pip3 install pushbullet.py`
 from config import *    # my dropbox API key and Push bullet API key
 
-from time import sleep, strftime # for the picamera and to name the files
+from time import sleep, strftime, time # for the picamera and to name the files
 from datetime import datetime, timedelta       # possbily not needed but used to get the sunrise for today
 import os.path
 
@@ -54,6 +54,9 @@ def the_cropper():
     upper = 0
     right = 1640
     lower = 922
+    print(f"Croppping files to new res: {right} by {lower}")
+    print(".........................................................")
+    print("")
     file_list = glob("/home/pi/sunrise300/images/*.JPG")
     for names in progressbar.progressbar(file_list):
         im = Image.open(names)
@@ -90,11 +93,15 @@ def the_camera(no_of_frames, delay):
 def the_lapser(vid_file, fps):
     video = vid_file
     frames = fps
+    start_time = time()
     print(f"Attempting to compile video file - < {video} > - using FFMPEG")
-    print("***************************************************************")
+    print(".........................................................")
     print("")
-    
-    subprocess.run(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset veryslow -crf 17 {video}", capture_output=True, shell=True)
+    subprocess.run(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset veryslow -crf 22 {video}", capture_output=True, shell=True)
+    end_time = time()
+    elapsed_time_secs = int(end_time - start_time)
+    elapsed_time_mins  = int(elapsed_time_secs / 60)
+    print(f"Programme executed in {elapsed_time_mins} minutes")
 
     if os.path.exists(video) and os.path.getsize(video) > 4000000: # has the file been written, and is it of a decent size?
         print(f"SUCCESS - FFMPEG created the video file: {video}")
@@ -123,7 +130,7 @@ def upload_to_twitter(vid_file):
         print("There was an error...")
         print(e)
         push = pb.push_note("There was a failure with the Twitter Upload.", e)
-    print("***************************************************************")
+    print(".........................................................")
     print("")
 
 def dropbox_uploader(filename):
@@ -138,7 +145,7 @@ def dropbox_uploader(filename):
     except:
         push = pb.push_note("There was a failure with the Dropbox Upload.", "Uh oh")
         print("FAILED")
-    print("***************************************************************")
+    print(".........................................................")
     print("")
 
 def start_time():
