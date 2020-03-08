@@ -96,7 +96,7 @@ def the_lapser(vid_file, fps):
     start_time = time()
     print(f"Attempting to compile video file - < {video} > - using FFMPEG")
     print(".........................................................")
-    subprocess.run(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset veryslow -crf 20 {video}", capture_output=True, shell=True)
+    subprocess.run(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset veryslow -crf 17 {video}", capture_output=True, shell=True)
     end_time = time()
     elapsed_time_secs = int(end_time - start_time)
     elapsed_time_mins  = int(elapsed_time_secs / 60)
