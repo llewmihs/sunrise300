@@ -203,6 +203,7 @@ if __name__ == "__main__":
  
     the_camera(total_frames, delay)
 
+    the_cropper()
     
     try:
         the_lapser(vid_file, fps)
