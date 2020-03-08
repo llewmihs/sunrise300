@@ -23,10 +23,10 @@ from glob import glob # for the file upload process
 
 import progressbar
 
-saveout = sys.stdout   
-logfile = strftime("%d %B - %H %M") + ".log"                              
-fsock = open(logfile, 'w') 
-sys.stdout = fsock 
+# saveout = sys.stdout   
+# logfile = strftime("%d %B - %H %M") + ".log"                              
+# fsock = open(logfile, 'w') 
+# sys.stdout = fsock 
 
 import sys # for argv testing
 
