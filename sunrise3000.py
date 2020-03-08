@@ -96,17 +96,16 @@ def the_lapser(vid_file, fps):
     start_time = time()
     print(f"Attempting to compile video file - < {video} > - using FFMPEG")
     print(".........................................................")
-    print("")
     subprocess.run(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset veryslow -crf 22 {video}", capture_output=True, shell=True)
     end_time = time()
     elapsed_time_secs = int(end_time - start_time)
     elapsed_time_mins  = int(elapsed_time_secs / 60)
     print(f"Programme executed in {elapsed_time_mins} minutes")
 
-    if os.path.exists(video) and os.path.getsize(video) > 4000000: # has the file been written, and is it of a decent size?
+    if os.path.exists(video): # has the file been written, and is it of a decent size?
         print(f"SUCCESS - FFMPEG created the video file: {video}")
-        file_in_mb = os.path.getsize(video)/((1024*1024))
-        print(f"Fileseize: {file_in_mb} Mb")
+        file_in_mb = int(os.path.getsize(video)/((1024*1024)))
+        print(f"Fileseize: ~ {file_in_mb} Mb")
         push = pb.push_note(f"FFMPEG Timelapse Successful: {video}", f"Fileseize: {file_in_mb} Mb")
     else:
         print(f"ERROR - FFMPEG failed to create the video file: {video}")
@@ -204,7 +203,7 @@ if __name__ == "__main__":
     the_camera(total_frames, delay)
 
     the_cropper()
-    
+
     try:
         the_lapser(vid_file, fps)
 
