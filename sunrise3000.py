@@ -192,8 +192,8 @@ if __name__ == "__main__":
     finally:
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
-        sys.stdout = saveout                                     6
-        fsock.close()
+        # sys.stdout = saveout                                     6
+        # fsock.close()
 
 
     
