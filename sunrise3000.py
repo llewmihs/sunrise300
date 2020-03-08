@@ -53,7 +53,7 @@ def the_cropper():
     left = 0
     upper = 0
     right = 1640
-    lower = 923
+    lower = 922
     file_list = glob("/home/pi/sunrise300/images/*.jpg")
     for names in file_list:
         im = Image.open(names)
@@ -71,7 +71,7 @@ def lapse_details(duration_in_minutes, fps):
 
 def the_camera(no_of_frames, delay):
     start_time = strftime("%H:%M:%S")
-    print(f"The camera began taking images at {start_time}")
+    print(f"The camera BEGAN taking images at {start_time}")
     camera.start_preview()
     sleep(2) # Camera warm-up time
     for i in progressbar.progressbar(range(no_of_frames)):
@@ -80,7 +80,7 @@ def the_camera(no_of_frames, delay):
         camera.capture(file_path)
         sleep(delay)
     end_time = strftime("%H:%M:%S")
-    print(f"The camera took {range(no_of_frames)} images.")
+    print(f"The camera took {len(no_of_frames)} images.")
     print(f"The camera ENDED taking images at {end_time}")
     print(".........................................................")
     print("")
@@ -94,7 +94,7 @@ def the_lapser(vid_file, fps):
     print("***************************************************************")
     print("")
     
-    subprocess.call(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vf crop=1640:923:0:0 -vcodec libx264 -preset veryslow -crf 17 {video}", shell=True)
+    subprocess.call(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset veryslow -crf 17 {video}", shell=True)
 
     if os.path.exists(video):
         print(f"SUCCESS - FFMPEG created the video file: {video}")
