@@ -96,9 +96,11 @@ def the_lapser(vid_file, fps):
     
     subprocess.call(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset veryslow -crf 17 {video}", shell=True)
 
-    if os.path.exists(video):
+    if os.path.exists(video) and os.path.getsize(video) > 4000000: # has the file been written, and is it of a decent size?
         print(f"SUCCESS - FFMPEG created the video file: {video}")
-        push = pb.push_note("FFMPEG Timelapse Successful", "Well done.")
+        file_in_mb = os.path.getsize(video)/((1024*1024))
+        print(f"Fileseize: {file_in_mb} Mb")
+        push = pb.push_note(f"FFMPEG Timelapse Successful: {video}", f"Fileseize: {file_in_mb} Mb")
     else:
         print(f"ERROR - FFMPEG failed to create the video file: {video}")
         print(f"Programme exiting early")
