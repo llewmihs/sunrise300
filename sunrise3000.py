@@ -55,7 +55,7 @@ def the_cropper():
     right = 1640
     lower = 922
     file_list = glob("/home/pi/sunrise300/images/*.JPG")
-    for names in file_list:
+    for names in progressbar.progressbar(range(file_list)):
         im = Image.open(names)
         im = im.crop((left, upper, right, lower))
         im.save(names)
