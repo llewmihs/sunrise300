@@ -23,10 +23,10 @@ from glob import glob # for the file upload process
 
 import progressbar
 
-# saveout = sys.stdout   
-# logfile = strftime("%d %B - %H %M") + ".log"                              
-# fsock = open(logfile, 'w') 
-# sys.stdout = fsock 
+saveout = sys.stdout   
+logfile = strftime("%d %B - %H %M") + ".txt"                              
+fsock = open(logfile, 'w') 
+sys.stdout = fsock 
 
 import sys # for argv testing
 
@@ -218,8 +218,9 @@ if __name__ == "__main__":
     finally:
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
-        # sys.stdout = saveout                                     6
-        # fsock.close()
+        dropbox_uploader(logfile)
+        sys.stdout = saveout                                     6
+        fsock.close()
 
 
     
