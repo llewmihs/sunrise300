@@ -219,7 +219,7 @@ if __name__ == "__main__":
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
         dropbox_uploader(logfile)
-        sys.stdout = saveout                                     6
+        sys.stdout = saveout
         fsock.close()
 
 
