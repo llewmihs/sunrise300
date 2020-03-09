@@ -157,7 +157,7 @@ def start_time():
     s = sun(city.observer, date=datetime.date(datetime.now())+timedelta(days=1))
     sunrise_time = s['sunrise']   
     # timelapse shoudl start 1 hour prior
-    timelapse_start = sunrise_time - timedelta(minutes=40)
+    timelapse_start = sunrise_time - timedelta(minutes=60)
     return timelapse_start
 
 def cron_update(timelapse_start):
@@ -198,7 +198,7 @@ if __name__ == "__main__":
         fps = int(sys.argv[2])
     else:
         print("AUTOMATIC EXECUTION")
-        real_time = 60
+        real_time = 90
         fps = 15
     print(f" - Total timelapse duration is: {real_time} minutes.")
     print(f" - Output framerate  is: {fps} fps.")        
