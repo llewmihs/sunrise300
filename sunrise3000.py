@@ -7,6 +7,8 @@ import dropbox      # for uploading to dropbox, `pip3 install dropbox`
 from pushbullet import Pushbullet   # notification software to monitor the programme remotely `pip3 install pushbullet.py`
 from config import *    # my dropbox API key and Push bullet API key
 
+from decimal import *
+
 from time import sleep, strftime, time # for the picamera and to name the files
 from datetime import datetime, timedelta       # possbily not needed but used to get the sunrise for today
 import os.path
@@ -23,11 +25,6 @@ from astral.sun import sun          # to get the sunrise time
 from glob import glob # for the file upload process
 
 import progressbar
-
-saveout = sys.stdout   
-logfile = strftime("%d %B - %H %M") + ".txt"                              
-fsock = open(logfile, 'w') 
-sys.stdout = fsock 
 
 import sys # for argv testing
 
@@ -97,7 +94,7 @@ def the_lapser(vid_file, fps):
     start_time = time()
     print(f"Attempting to compile video file - < {video} > - using FFMPEG")
     print(".........................................................")
-    subprocess.run(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset veryslow -crf 17 {video}", capture_output=True, shell=True)
+    subprocess.call(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset slow -crf 18 {video}", shell=True)
     end_time = time()
     elapsed_time_secs = int(end_time - start_time)
     elapsed_time_mins  = int(elapsed_time_secs / 60)
@@ -133,8 +130,13 @@ def upload_to_twitter(vid_file):
     print(".........................................................")
     print("")
 
+def file_size(filename):
+    file_in_mb = int(os.path.getsize(filename)/((1024*1024)))
+    print(f"file size is {file_in_mb} mb")
+    return file_in_mb
+
 def dropbox_uploader(filename):
-    print(f"Twython will now upload the mp4 time lapse: {filename} to Dropbox.")
+    print(f"Sunrise3000 will now upload the mp4 time lapse: {filename} to Dropbox.")
     try:
         with open(filename, "rb") as f:
             print(f"Trying file {filename}")
@@ -178,6 +180,11 @@ def clean_up():
 if __name__ == "__main__":
 
     clean_up()
+
+    saveout = sys.stdout   
+    logfile = strftime("%d %B - %H %M") + ".txt"                              
+    fsock = open(logfile, 'w') 
+    sys.stdout = fsock 
     
     now = strftime("%Y %B %d - %H %M %S") # get the start time of the programme
     print("------------------ Timelapse 3000 Logfile ------------------ ")
