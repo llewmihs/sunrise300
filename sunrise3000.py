@@ -7,8 +7,6 @@ import dropbox      # for uploading to dropbox, `pip3 install dropbox`
 from pushbullet import Pushbullet   # notification software to monitor the programme remotely `pip3 install pushbullet.py`
 from config import *    # my dropbox API key and Push bullet API key
 
-from decimal import *
-
 from time import sleep, strftime, time # for the picamera and to name the files
 from datetime import datetime, timedelta       # possbily not needed but used to get the sunrise for today
 import os.path
@@ -226,7 +224,7 @@ if __name__ == "__main__":
     finally:
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
-        dropbox_uploader(logfile)
+        # dropbox_uploader(logfile)
         sys.stdout = saveout
         fsock.close()
 
