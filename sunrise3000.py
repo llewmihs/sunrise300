@@ -10,6 +10,7 @@ from config import *    # my dropbox API key and Push bullet API key
 from time import sleep, strftime, time # for the picamera and to name the files
 from datetime import datetime, timedelta       # possbily not needed but used to get the sunrise for today
 import os.path
+import sys
 
 from picamera import PiCamera # raspberry pi camera
 
