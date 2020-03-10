@@ -207,11 +207,6 @@ def clean_up():
 if __name__ == "__main__":
 
     clean_up()
-
-    saveout = sys.stdout   
-    logfile = strftime("%d %B - %H %M") + ".txt"                              
-    fsock = open(logfile, 'w') 
-    sys.stdout = fsock 
     
     now = strftime("%Y %B %d - %H %M %S") # get the start time of the programme
     print("------------------ Timelapse 3000 Logfile ------------------ ")
@@ -254,8 +249,7 @@ if __name__ == "__main__":
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
         # dropbox_uploader(logfile)
-        sys.stdout = saveout
-        fsock.close()
+
 
 
     
