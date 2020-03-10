@@ -196,8 +196,8 @@ if __name__ == "__main__":
         fps = int(sys.argv[2])
     else:
         print("AUTOMATIC EXECUTION")
-        real_time = 90
-        fps = 15
+        real_time = 120
+        fps = 30
     print(f" - Total timelapse duration is: {real_time} minutes.")
     print(f" - Output framerate  is: {fps} fps.")        
     total_frames, delay = lapse_details(real_time, fps)
