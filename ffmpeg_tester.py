@@ -6,12 +6,12 @@ def test_lapser():
     # CRF ranges 17 - 30
     for i in range(17,30,2):
         for j in presets:
-            print(f"CRF - {i}, present - {j})
+            print(f"CRF - {i}, present - {j}")
 
     
 if __name__ == "__main__":
     test_lapser()
-        
+
     # start_time = time()
     # print(f"Attempting to compile video file - < {video} > - using FFMPEG")
     # print(".........................................................")
