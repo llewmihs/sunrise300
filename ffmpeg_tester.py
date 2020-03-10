@@ -1,6 +1,6 @@
 import subprocess
 import os.path
-
+from time import time
 import logging
 logging.basicConfig(filename='ffmpeg_test.log',level=logging.DEBUG)
 logging.info('Begin ffmpeg test')
@@ -11,9 +11,12 @@ def test_lapser():
     for i in range(17,25,2):
         for j in presets:
             fl = f"crf-{i}-preset-{j}.mp4"
+            start_time = time()
             subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset {j} -crf {i} {fl}", shell=True)
+            end_time = time()
+            elapsed_time_mins = int((end_time - start_time)/60)
             file_in_mb = int(os.path.getsize(fl)/((1024*1024)))
-            logging.info(f"File: {fl}. Size: {file_in_mb} mb")
+            logging.info(f"File: {fl}. Size: {file_in_mb} mb. Time {elapsed_time_mins} mins")
             
 
     
