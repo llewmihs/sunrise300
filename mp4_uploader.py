@@ -12,7 +12,7 @@ def files_getter():
 def upload_db(mp4_file):
     with open(mp4_file, "rb") as f:
         print(f"Uploading file {mp4_file}")
-            dbx.files_upload(f.read(), mp4_file)
+        dbx.files_upload(f.read(), mp4_file)
 
 if __name__ == "__main__":
     fl = files_getter()
