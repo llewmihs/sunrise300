@@ -1,12 +1,20 @@
 import subprocess
 import os.path
 
+import logging
+logging.basicConfig(filename='ffmpeg_test.log',level=logging.DEBUG)
+logging.info('Begin ffmpeg test')
+
 def test_lapser():
-    presets = ['slow','veryslow']
-    # CRF ranges 17 - 30
-    for i in range(17,30,2):
+    presets = ['slow']
+    # CRF ranges 17 - 25
+    for i in range(17,25,2):
         for j in presets:
-            print(f"CRF - {i}, present - {j}")
+            fl = f"crf-{i}-preset-{j}.mp4"
+            subprocess.call(f"ffmpeg -y -r 15 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset {j} -crf {i} {fl}", shell=True)
+            file_in_mb = int(os.path.getsize(fl)/((1024*1024)))
+            logging.info(f"File: {fl}. Size: {file_in_mb} mb")
+            
 
     
 if __name__ == "__main__":
