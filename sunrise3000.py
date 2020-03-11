@@ -142,12 +142,14 @@ def the_lapser(vid_file, fps):
 def new_lapser(vid_file, fps):
     # check if the file has been created, and if not run the ffmpeg subprocess
     counter = 0
+    video = vid_file
+    frames = fps
     start_time = time()
     while os.path.exists(vid_file) == False:
         counter = counter + 1
         start_time = time()
         logging.info(f"Video file not created yet - running FFMPEG iteration: {counter}")
-        subprocess.call(f"ffmpeg -y -r {fps} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset slow -crf 17 {vid_file}", shell=True)
+        subprocess.call(f"ffmpeg -y -r {frames} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset slow -crf 17 {video}", shell=True)
     end_time = time()
     elapsed_time_secs = int(end_time - start_time)
     elapsed_time_mins  = int(elapsed_time_secs / 60)
