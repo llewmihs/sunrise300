@@ -21,6 +21,7 @@ from crontab import CronTab     # so that we can write to the crontab at the end
 from astral import LocationInfo     # to get the location info `pip3 install astral`
 from astral.sun import sun          # to get the sunrise time
 from glob import glob # for the file upload process
+import logging
 
 import progressbar
 
@@ -32,6 +33,8 @@ from PIL import Image #python3 -m pip install Pillow, also need: sudo apt-get in
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
 from pushbullet import Pushbullet
 pb = Pushbullet(PUSHBULLET)
+
+logging.basicConfig(filename='ffmpeg_test.log',level=logging.DEBUG)
 
 now = strftime("%Y%m%d")
 
@@ -62,7 +65,7 @@ def the_cropper():
 def lapse_details(duration_in_minutes, fps):
     print(f"User lapse duration request: {duration_in_minutes} minutes.")
     real_time = duration_in_minutes * 60 # minutes * 60 seconds
-    film_length = 60
+    film_length = 40
     frame_rate = fps
     total_frames = film_length * frame_rate
     delay = real_time / total_frames
@@ -138,6 +141,21 @@ def the_lapser(vid_file, fps):
         sys.exit()
         push = pb.push_note("There was a failure with the FFMPEG lapse.", "Uh oh")
 
+def new_lapser(vid_file, fps):
+    # check if the file has been created, and if not run the ffmpeg subprocess
+    counter = 0
+    while os.path.exists(vid_file) == False:
+        counter = counter + 1
+        start_time = time()
+        logging.info(f"Video file not created yet - running FFMPEG iteration: {counter}")
+        subprocess.call(f"ffmpeg -y -r {fps} -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG -vcodec libx264 -preset slow -crf 17 {vid_file}", shell=True)
+    end_time = time()
+    elapsed_time_secs = int(end_time - start_time)
+    elapsed_time_mins  = int(elapsed_time_secs / 60)
+    fs = int(os.path.getsize(vid_file)/((1024*1024)))
+    logging.info(f"Video file << {vid_file} >> created - time {elapsed_time_mins} - file size {fs}")
+
+
 def upload_to_twitter(vid_file):
     print("Twython will now upload the mp4 time lapse to Twitter.")
     try:
@@ -163,17 +181,17 @@ def file_size(filename):
     return file_in_mb
 
 def dropbox_uploader(filename):
-    print(f"Sunrise3000 will now upload the mp4 time lapse: {filename} to Dropbox.")
+    logging.info(f"Sunrise3000 will now upload the mp4 time lapse: {filename} to Dropbox.")
     try:
         with open(filename, "rb") as f:
             print(f"Trying file {filename}")
             print(f"Uploading now ->    ", end='')
             dbx.files_upload(f.read(), filename, mute = True)
-            print("SUCCESS")
+            logging.info("SUCCESS")
         push = pb.push_note("Dropbox Upload Successful", "Well done.")
     except:
         push = pb.push_note("There was a failure with the Dropbox Upload.", "Uh oh")
-        print("FAILED")
+        logging.info("FAILED")
     print(".........................................................")
     print("")
 
@@ -201,33 +219,31 @@ def clean_up():
     try:
         subprocess.call("rm -r /home/pi/sunrise300/images/*.JPG", shell=True)
         subprocess.call("rm -r /home/pi/sunrise300/*.mp4", shell=True)
+        logging.info(f'Cleanup complete: .mp4 and .JPG files removed')
     except:
+        logging.info(f'Cleanup failed')
         pass
 
 if __name__ == "__main__":
-
-    clean_up()
     
     now = strftime("%Y %B %d - %H %M %S") # get the start time of the programme
-    print("------------------ Timelapse 3000 Logfile ------------------ ")
-    print("Runtime: " + now )
-    print(".........................................................")
-    print("")
+    logging.info(f'Timelapse started at {now}')
+    clean_up()
 
     if len(sys.argv) > 1:
-        print("MANUAL EXECUTION")
+        logging.info("MANUAL EXECUTION")
         real_time = int(sys.argv[1])
         fps = int(sys.argv[2])
     else:
-        print("AUTOMATIC EXECUTION")
+        logging.info("AUTOMATIC EXECUTION")
         real_time = 120
         fps = 30
-    print(f" - Total timelapse duration is: {real_time} minutes.")
-    print(f" - Output framerate  is: {fps} fps.")        
+    logging.info(f" - Total timelapse duration is: {real_time} minutes.")
+    logging.info(f" - Output framerate  is: {fps} fps.")        
     total_frames, delay = lapse_details(real_time, fps)
-    print(f"** Programme set to take {total_frames} images, with a {delay} second delay.**")
-    print(".........................................................")
-    print("")
+    logging.info(f"** Programme set to take {total_frames} images, with a {delay} second delay.**")
+    logging.info(".........................................................")
+
     push = pb.push_note(f"A {real_time} minutes timelapse Has Started at {now}.", f"Total frames: {total_frames}. Delay: {delay}. FPS. {fps}")
  
     the_camera(total_frames, delay)
