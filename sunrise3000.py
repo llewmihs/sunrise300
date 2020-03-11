@@ -260,7 +260,7 @@ if __name__ == "__main__":
     finally:
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
-        dropbox_uploader(logfile)
+        dropbox_uploader(log_filename)
 
 
 
