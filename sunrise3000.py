@@ -248,14 +248,14 @@ if __name__ == "__main__":
     the_camera(total_frames, delay)
 
     the_cropper()
-    video_file = "/home/pi/sunrise300/" + now + ".mp4"
+    video_file = now + ".mp4"
 
     try:
         new_lapser(video_file, fps)
 
         glob_file = glob("/home/pi/sunrise300/*.mp4")[0]
 
-        dropbox_uploader(glob_file)
+        #dropbox_uploader(glob_file)
     
     finally:
         lapse_start_time = start_time()
