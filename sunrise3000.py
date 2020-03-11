@@ -225,7 +225,7 @@ def clean_up():
 
 if __name__ == "__main__":
     
-    now = strftime("%d %B - %H:%M") # get the start time of the programme
+    now = strftime("%d %B - %H-%M") # get the start time of the programme
     logging.info(f'Timelapse started at {now}')
     clean_up()
 
