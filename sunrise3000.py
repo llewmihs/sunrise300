@@ -63,7 +63,7 @@ def the_cropper():
 def lapse_details(duration_in_minutes, fps):
     print(f"User lapse duration request: {duration_in_minutes} minutes.")
     real_time = duration_in_minutes * 60 # minutes * 60 seconds
-    film_length = 40
+    film_length = 30
     frame_rate = fps
     total_frames = film_length * frame_rate
     delay = real_time / total_frames
