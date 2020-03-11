@@ -228,6 +228,8 @@ if __name__ == "__main__":
     now = strftime("%d%B %H-%M") # get the start time of the programme
     logging.info(f'Timelapse started at {now}')
     clean_up()
+    video_file = now + ".mp4"
+    print(video_file)
 
     if len(sys.argv) > 1:
         logging.info("MANUAL EXECUTION")
