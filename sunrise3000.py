@@ -144,6 +144,7 @@ def the_lapser(vid_file, fps):
 def new_lapser(vid_file, fps):
     # check if the file has been created, and if not run the ffmpeg subprocess
     counter = 0
+    start_time = time()
     while os.path.exists(vid_file) == False:
         counter = counter + 1
         start_time = time()
