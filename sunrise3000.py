@@ -34,11 +34,9 @@ dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none 
 from pushbullet import Pushbullet
 pb = Pushbullet(PUSHBULLET)
 
-logging.basicConfig(filename='ffmpeg_test.log',level=logging.DEBUG)
+log_filename = strftime("%d%B - %H-%M") + ".log"
 
-now = strftime("%Y%m%d")
-
-vid_file = "/home/pi/sunrise300/" + strftime("%Y%m%d-%H%M") + ".mp4"
+logging.basicConfig(filename=log_filename,level=logging.DEBUG)
 
 # the Picamera
 camera = PiCamera()
@@ -227,7 +225,7 @@ def clean_up():
 
 if __name__ == "__main__":
     
-    now = strftime("%Y %B %d - %H %M %S") # get the start time of the programme
+    now = strftime("%d %B - %H:%M") # get the start time of the programme
     logging.info(f'Timelapse started at {now}')
     clean_up()
 
@@ -250,22 +248,19 @@ if __name__ == "__main__":
     the_camera(total_frames, delay)
 
     the_cropper()
+    video_file = "/home/pi/sunrise300/" + now + ".mp4"
 
     try:
-        the_lapser(vid_file, fps)
+        new_lapser(video_file, fps)
 
         glob_file = glob("/home/pi/sunrise300/*.mp4")[0]
 
         dropbox_uploader(glob_file)
     
-        # if len(sys.argv) > 1:
-        #     print("Test run, not uploading")
-        # else:
-        #     upload_to_twitter(glob_file)
     finally:
         lapse_start_time = start_time()
         cron_update(lapse_start_time)
-        # dropbox_uploader(logfile)
+        dropbox_uploader(logfile)
 
 
 
