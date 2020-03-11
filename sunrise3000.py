@@ -63,7 +63,7 @@ def the_cropper():
 def lapse_details(duration_in_minutes, fps):
     print(f"User lapse duration request: {duration_in_minutes} minutes.")
     real_time = duration_in_minutes * 60 # minutes * 60 seconds
-    film_length = 30
+    film_length = 10
     frame_rate = fps
     total_frames = film_length * frame_rate
     delay = real_time / total_frames
@@ -227,7 +227,7 @@ def clean_up():
 
 if __name__ == "__main__":
     
-    now = strftime("%d%B %H-%M") # get the start time of the programme
+    now = strftime("%d%B%H%M") # get the start time of the programme
     logging.info(f'Timelapse started at {now}')
     clean_up()
     video_file = now + ".mp4"
