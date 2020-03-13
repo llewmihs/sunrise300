@@ -34,7 +34,7 @@ dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none 
 from pushbullet import Pushbullet
 pb = Pushbullet(PUSHBULLET)
 
-log_filename = strftime("%d%B - %H-%M") + ".log"
+log_filename = strftime("%d%B%H") + ".log"
 
 logging.basicConfig(filename=log_filename,level=logging.DEBUG)
 
