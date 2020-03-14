@@ -3,6 +3,8 @@ from config import *    # my dropbox API key and Push bullet API key
 import subprocess # to run file cleanup after the upload
 from glob import glob # for the file upload process
 from time import sleep, strftime, time # for the picamera and to name the files
+from pushbullet import Pushbullet   # notification software to monitor the programme remotely `pip3 install pushbullet.py`
+pb = Pushbullet(PUSHBULLET)
 
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
 
@@ -19,3 +21,4 @@ def upload(filename):
 if __name__ == "__main__":
     mp4file = rename()
     upload(mp4file)
+    push = pb.push_note("Dropbox Upload Successful", f"Filename:{mp4file}")
