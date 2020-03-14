@@ -1,5 +1,7 @@
 from glob import glob
 from PIL import Image
+import progressbar
+
 
 def the_cropper():
     # Setting the points for cropped image 
