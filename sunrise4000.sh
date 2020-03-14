@@ -18,3 +18,6 @@ ffmpeg -nostdin -y -r 30 -f image2 -start_number 0000 -i /home/pi/sunrise300/ima
 
 # update the crontab
 python3 crontab4000.py
+
+# dropbox upload
+python3 dropbox4000.py
