@@ -1,5 +1,6 @@
 from time import sleep, strftime, time # for the picamera and to name the files
 from datetime import datetime, timedelta       # possbily not needed but used to get the sunrise for today
+from config import *    # my dropbox API key and Push bullet API key
 
 from picamera import PiCamera # raspberry pi camera
 import progressbar
@@ -41,5 +42,6 @@ def the_camera(no_of_frames, delay):
 
 if __name__ == "__main__":
     total, delay = lapse_details(90, 30)
+    push = pb.push_note(f"A timelapse Has Started", "Total frames: {total}. Delay: {delay}. FPS. 30")
     the_camera(total, delay)
-    push = pb.push_note(f"A timelapse Has Started at.", f"Total frames: {total}. Delay: {delay}. FPS. 30")
+    
