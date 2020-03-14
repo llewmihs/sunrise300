@@ -6,6 +6,9 @@ import progressbar
 
 from PIL import Image #python3 -m pip install Pillow, also need: sudo apt-get install libopenjp2-7, sudo apt install libtiff5
 
+from pushbullet import Pushbullet   # notification software to monitor the programme remotely `pip3 install pushbullet.py`
+pb = Pushbullet(PUSHBULLET)
+
 # the Picamera
 camera = PiCamera()
 camera.resolution = (1640, 1232)
@@ -37,8 +40,6 @@ def the_camera(no_of_frames, delay):
     camera.stop_preview()
 
 if __name__ == "__main__":
-    print("Calcuating timelapse details")
     total, delay = lapse_details(90, 30)
-    print("Taking images")
     the_camera(total, delay)
-    print("Finished")
+    push = pb.push_note(f"A timelapse Has Started at.", f"Total frames: {total}. Delay: {delay}. FPS. 30")
