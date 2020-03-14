@@ -18,7 +18,7 @@ def cron_update(timelapse_start):
     my_cron = CronTab(user='pi')
     my_cron.remove_all(comment='foo')
 
-    job = my_cron.new(command='./home/pi/sunrse300/sunrise4000.sh', comment='foo')
+    job = my_cron.new(command='cd /home/pi/sunrise300 && ./sunrise4000.sh', comment='foo')
     job.hour.on(timelapse_start.hour)
     job.minute.on(timelapse_start.minute)
     my_cron.write() #write the job to the crontab
