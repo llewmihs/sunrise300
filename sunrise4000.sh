@@ -21,3 +21,6 @@ python3 crontab4000.py
 
 # dropbox upload
 python3 dropbox4000.py
+
+# twitter upload
+python3 twitter4000.py
