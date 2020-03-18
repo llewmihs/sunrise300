@@ -5,6 +5,8 @@ from config import *    # my dropbox API key and Push bullet API key
 from picamera import PiCamera # raspberry pi camera
 import progressbar
 
+import sys
+
 from PIL import Image #python3 -m pip install Pillow, also need: sudo apt-get install libopenjp2-7, sudo apt install libtiff5
 
 from pushbullet import Pushbullet   # notification software to monitor the programme remotely `pip3 install pushbullet.py`
@@ -41,7 +43,11 @@ def the_camera(no_of_frames, delay):
     camera.stop_preview()
 
 if __name__ == "__main__":
-    total, delay = lapse_details(90, 30)
+    if len(sys.argv) > 1:
+        duration = int(sys.argv[1])
+    else:
+        duration = 90
+    total, delay = lapse_details(duration, 30)
     push = pb.push_note(f"A timelapse Has Started", "Total frames: {total}. Delay: {delay}. FPS. 30")
     the_camera(total, delay)
     
