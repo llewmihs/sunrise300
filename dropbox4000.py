@@ -5,13 +5,17 @@ from glob import glob # for the file upload process
 from time import sleep, strftime, time # for the picamera and to name the files
 from pushbullet import Pushbullet   # notification software to monitor the programme remotely `pip3 install pushbullet.py`
 pb = Pushbullet(PUSHBULLET)
+import sys
 
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
 
 def rename():
-    glob_file = glob("/home/pi/sunrise300/*.mp4")[0]
-    new_file = "/home/pi/sunrise300/" + strftime("%d%B")+".mp4"
-    subprocess.call(f"cp {glob_file} {new_file}", shell = True)
+    if len(sys.argv) > 1:
+        new_file = glob("/home/pi/sunrise300/*.mp4")[0]
+    else:
+        glob_file = glob("/home/pi/sunrise300/*.mp4")[0]
+        new_file = "/home/pi/sunrise300/" + strftime("%d%B")+".mp4"
+        subprocess.call(f"cp {glob_file} {new_file}", shell = True)
     subprocess.call(f"rm -r {glob_file}", shell = True)
     return new_file
 
