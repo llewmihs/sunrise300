@@ -14,7 +14,7 @@ pb = Pushbullet(PUSHBULLET)
 
 # the Picamera
 camera = PiCamera()
-camera.resolution = (3280, 2464)
+camera.resolution = (3280, 2464) #asd
 
 def lapse_details(duration_in_minutes, fps):
     real_time = duration_in_minutes * 60 # minutes * 60 seconds
