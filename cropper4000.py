@@ -22,4 +22,4 @@ def the_cropper():
 if __name__ == "__main__":
     push = pb.push_note("Images taken successfully", "Commencing crop")
 
-    the_cropper()
+    #the_cropper()
