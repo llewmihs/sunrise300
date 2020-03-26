@@ -9,8 +9,8 @@ def the_cropper():
     # Setting the points for cropped image 
     left = 0
     upper = 0
-    right = 1640
-    lower = 922
+    right = 2180
+    lower = 1648
     print(".........................................................")
     print(f"Croppping files to new res: {right} by {lower}")
     file_list = glob("/home/pi/sunrise300/images/*.JPG")
@@ -22,4 +22,4 @@ def the_cropper():
 if __name__ == "__main__":
     push = pb.push_note("Images taken successfully", "Commencing crop")
 
-    #the_cropper()
+    the_cropper()
