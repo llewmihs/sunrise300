@@ -6,6 +6,7 @@ from picamera import PiCamera # raspberry pi camera
 import progressbar
 from glob import glob # for the file upload process
 import sys
+dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
 
 
 # the Picamera
