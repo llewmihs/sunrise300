@@ -28,8 +28,8 @@ def the_camera(no_of_frames, delay):
 def upload():
     glob_files = glob("/home/pi/sunrise300/highRes/*.JPG")
     for i in glob_files:
-        with open(filename, "rb") as f:
-            dbx.files_upload(f.read(), filename, mute = True)
+        with open(i, "rb") as f:
+            dbx.files_upload(f.read(), i, mute = True)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
