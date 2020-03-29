@@ -33,7 +33,7 @@ def upload():
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        the_camera(sys.arv[1], sys.argv[2])
+        the_camera(sys.argv[1], sys.argv[2])
     else:
         the_camera(900, 2)
     upload()
