@@ -22,7 +22,7 @@ def take_a_picture():
 def  upload_to_dropbox(filepath):
     print("Uploading to Dropbox")
     with open(filepath, "rb") as f:
-        dbx.files_upload(f.read(), filename, mute = True)
+        dbx.files_upload(f.read(), filepath, mute = True)
 
 if __name__ == "__main__":
     upload_to_dropbox(take_a_picture())
