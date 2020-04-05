@@ -1,6 +1,7 @@
 from time import sleep, strftime, time
 from picamera import PiCamera
 from config import *
+import dropbox
 
 #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) 
