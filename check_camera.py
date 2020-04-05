@@ -16,9 +16,9 @@ def take_a_picture():
     sleep(2)
     file_name = strftime("%H-%M-%S") + ".JPG"
     full_path = "/home/pi/sunrise300/images/" + file_name
-    camera.capture(file_path)
+    camera.capture(full_path)
     camera.stop_preview()
-    return file_path, file_name
+    return full_path, file_name
 
 def  upload_to_dropbox(filepath, filename):
     print("Uploading to Dropbox")
