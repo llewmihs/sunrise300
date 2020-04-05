@@ -27,4 +27,5 @@ def  upload_to_dropbox(filepath, filename):
         dbx.files_upload(f.read(), dropbox_filepath, mute = True)
 
 if __name__ == "__main__":
-    upload_to_dropbox(take_a_picture())
+    i, j = take_a_picture()
+    upload_to_dropbox(i,j)
