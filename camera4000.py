@@ -3,7 +3,6 @@ from datetime import datetime, timedelta       # possbily not needed but used to
 from config import *    # my dropbox API key and Push bullet API key
 
 from picamera import PiCamera # raspberry pi camera
-import progressbar
 
 import sys
 
@@ -30,7 +29,7 @@ def the_camera(no_of_frames, delay):
     print(f"The camera BEGAN taking images at {start_time}")
     camera.start_preview()
     sleep(2) # Camera warm-up time
-    for i in progressbar.progressbar(range(no_of_frames)):
+    for i in range(no_of_frames):
         #create timestamp filename
         file_path = "/home/pi/sunrise300/images/" + 'IMAGE_' '{0:04d}'.format(i)+".JPG"
         camera.capture(file_path)
