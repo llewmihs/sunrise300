@@ -8,7 +8,7 @@ dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None)
 
 # the Picamera
 camera = PiCamera()
-camera.resolution = (1640, 1232)
+camera.resolution = (3280, 2464)
 
 def take_a_picture():
     print("Taking a photo")
