@@ -1,5 +1,6 @@
 import dropbox      # for uploading to dropbox, `pip3 install dropbox`
 from config import *    # my dropbox API key and Push bullet API key
+import os
 
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
 
