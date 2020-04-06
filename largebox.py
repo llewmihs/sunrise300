@@ -12,7 +12,7 @@ CHUNK_SIZE = 4 * 1024 * 1024
 
 if file_size <= CHUNK_SIZE:
 
-    print dbx.files_upload(f, dest_path)
+    print (dbx.files_upload(f, dest_path))
 
 else:
 
@@ -23,9 +23,9 @@ else:
 
     while f.tell() < file_size:
         if ((file_size - f.tell()) <= CHUNK_SIZE):
-            print dbx.files_upload_session_finish(f.read(CHUNK_SIZE),
+            print (dbx.files_upload_session_finish(f.read(CHUNK_SIZE),
                                             cursor,
-                                            commit)
+                                            commit))
         else:
             dbx.files_upload_session_append(f.read(CHUNK_SIZE),
                                             cursor.session_id,
