@@ -13,7 +13,7 @@ pb = Pushbullet(PUSHBULLET)
 
 # the Picamera
 camera = PiCamera()
-camera.resolution = (1640, 1232)
+camera.resolution = (3280, 2464)
 
 def lapse_details(duration_in_minutes, fps):
     print(f"User lapse duration request: {duration_in_minutes} minutes.")

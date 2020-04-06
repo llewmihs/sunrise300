@@ -14,7 +14,7 @@ def rename():
         new_file = glob("/home/pi/sunrise300/*.mp4")[0]
     else:
         glob_file = glob("/home/pi/sunrise300/*.mp4")[0]
-        new_file = "/home/pi/sunrise300/" + strftime("%d%B")+".mp4"
+        new_file = "/home/pi/sunrise300/" + strftime("%d%B-%h-%m")+".mp4"
         subprocess.call(f"cp {glob_file} {new_file}", shell = True)
         subprocess.call(f"rm -r {glob_file}", shell = True)
     return new_file
