@@ -3,7 +3,7 @@ from config import *    # my dropbox API key and Push bullet API key
 
 dbx = dropbox.Dropbox(YOUR_ACCESS_TOKEN, timeout = None) #dropbox, timeout=none allows for uploading of larger files without 30second normal timeout
 
-filepath = "/home/pi/sunrise300/06April-Apr-04-2.mp4"
+file_path = "/home/pi/sunrise300/06April-Apr-04-2.mp4"
 
 f = open(file_path)
 file_size = os.path.getsize(file_path)
