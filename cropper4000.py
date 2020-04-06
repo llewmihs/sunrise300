@@ -8,8 +8,8 @@ def the_cropper():
     # Setting the points for cropped image 
     left = 0
     upper = 0
-    right = 1640
-    lower = 922
+    right = 3200
+    lower = 1800
     print(".........................................................")
     print(f"Croppping files to new res: {right} by {lower}")
     file_list = glob("/home/pi/sunrise300/images/*.JPG")
