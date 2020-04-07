@@ -25,7 +25,8 @@ def image_move():
     counter = 0
     for i in file_list:
         if counter < 450:
-            print(i)
+            filename = i[-15:]
+            print(filename)
             # subprocess.call(f"cp ", shell=True)
             counter += 1
         else:
