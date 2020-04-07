@@ -24,11 +24,11 @@ def image_move():
         filename = i[-14:]
         if counter < 450:
             print(filename)
-            subprocess.call(f"mv {i}  /home/pi/set1/{filename}", shell=True)
+            subprocess.call(f"mv {i}  /home/pi/sunrise300/set1/{filename}", shell=True)
             counter += 1
         else:
             print(filename)
-            subprocess.call(f"mv {i}  /home/pi/set2/{filename}", shell=True)
+            subprocess.call(f"mv {i}  /home/pi/sunrise300/set2/{filename}", shell=True)
 
 if __name__ == "__main__":
     image_move()
