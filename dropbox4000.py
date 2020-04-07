@@ -25,9 +25,9 @@ def rename():
 
 def upload(file_A, file_B):
     with open(file_A, "rb") as f:
-        dbx.files_upload(f.read(), filename, mute = True)
+        dbx.files_upload(f.read(), file_A, mute = True)
     with open(file_B, "rb") as f:
-        dbx.files_upload(f.read(), filename, mute = True)
+        dbx.files_upload(f.read(), file_B, mute = True)
 if __name__ == "__main__":
     fileA, fileB = rename()
     upload(fileA, fileB)
