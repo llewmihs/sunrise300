@@ -18,7 +18,9 @@ def the_cropper():
         im.save(names)
 
 def image_move():
-    file_list = glob("/home/pi/sunrise300/images/*.JPG")
+    file_list = sorted(glob("/home/pi/sunrise300/images/*.JPG"))
+
+
     number_of_files = len(file_list)
     counter = 0
     for i in file_list:
