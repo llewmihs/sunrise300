@@ -19,7 +19,7 @@ def the_cropper():
 def image_move():
     file_list = glob("/home/pi/sunrise300/images/*.JPG")
     number_of_files = len(file_list)
-    for i in int(len(file_list)/100):
+    for i in range(len(file_list)/100):
         print(i)
 
 
