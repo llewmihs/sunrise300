@@ -24,14 +24,14 @@ def image_move():
     number_of_files = len(file_list)
     counter = 0
     for i in file_list:
+        filename = i[-14:]
         if counter < 450:
-            filename = i[-15:]
             print(filename)
-            # subprocess.call(f"cp ", shell=True)
+            subprocess.call(f"cp {i}  /home/pi/set1/{filename}", shell=True)
             counter += 1
         else:
-            print("ssss" + i)
-
+            print(filename)
+            subprocess.call(f"cp {i}  /home/pi/set2/{filename}", shell=True)
 
 if __name__ == "__main__":
     image_move()
