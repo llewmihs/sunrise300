@@ -17,7 +17,7 @@ def the_cropper():
         im = im.crop((left, upper, right, lower))
         im.save(names)
 
- def image_move():
+def image_move():
     file_list = glob("/home/pi/sunrise300/images/*.JPG")
     number_of_files = len(file_list)
     print(number_of_files)
