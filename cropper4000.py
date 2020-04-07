@@ -1,7 +1,6 @@
 from glob import glob
 from PIL import Image
 from config import *    # my dropbox API key and Push bullet API key
-pb = Pushbullet(PUSHBULLET)
 
 def the_cropper():
     # Setting the points for cropped image 
