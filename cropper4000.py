@@ -24,4 +24,4 @@ def image_move():
 
 
 if __name__ == "__main__":
-    image_move():
+    image_move()
