@@ -1,7 +1,6 @@
 from glob import glob
 from PIL import Image
 from config import *    # my dropbox API key and Push bullet API key
-from pushbullet import Pushbullet   # notification software to monitor the programme remotely `pip3 install pushbullet.py`
 pb = Pushbullet(PUSHBULLET)
 
 def the_cropper():
@@ -18,7 +17,11 @@ def the_cropper():
         im = im.crop((left, upper, right, lower))
         im.save(names)
 
-if __name__ == "__main__":
-    push = pb.push_note("Images taken successfully", "Commencing crop")
+ def image_move():
+     file_list = glob("/home/pi/sunrise300/images/*.JPG")
+     number_of_files = len(file_list)
+     print(number_of_files)
 
-    the_cropper()
+
+if __name__ == "__main__":
+    image_move():
