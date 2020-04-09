@@ -7,5 +7,9 @@ def rename():
     subprocess.call(f"mv /home/pi/sunrise300/timelapse.mp4 /home/pi/sunrise300/{filename}")
     return filename
 
-def scp_transfer(password, address, filename):
-    subprocess.call(f"")
+def scp_copy(filename, password, localpath):
+    subprocess.call(f"sshpass -p {password} scp {filename} {localpath}", shell = True)
+
+if __name__ == "__main__":
+    filename = rename()
+    scp_copy(filename, password, localpath)
