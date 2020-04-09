@@ -47,6 +47,6 @@ if __name__ == "__main__":
     else:
         duration = 90
     total, delay = lapse_details(duration, 30)
-    push = pb.push_note(f"A timelapse Has Started", "Total frames: {total}. Delay: {delay}. FPS. 30")
+    push = pb.push_note("A timelapse Has Started", f"Total frames: {total}. Delay: {delay}. FPS. 30")
     the_camera(total, delay)
     
