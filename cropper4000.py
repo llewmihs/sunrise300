@@ -17,18 +17,5 @@ def the_cropper():
         im = im.crop((left, upper, right, lower))
         im.save(names)
 
-def image_move():
-    file_list = sorted(glob("/home/pi/sunrise300/images/*.JPG"))
-    counter = 0
-    for i in file_list:
-        filename = i[-14:]
-        if counter < 450:
-            print(filename)
-            subprocess.call(f"mv {i}  /home/pi/sunrise300/set1/{filename}", shell=True)
-            counter += 1
-        else:
-            print(filename)
-            subprocess.call(f"mv {i}  /home/pi/sunrise300/set2/{filename}", shell=True)
-
 if __name__ == "__main__":
-    image_move()
+    the_cropper()
