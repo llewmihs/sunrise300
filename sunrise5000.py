@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, strftime
 from astral import LocationInfo     # to get the location info `pip3 install astral`
 from astral.sun import sun          # to get the sunrise time
 #from picamera import PiCamera # raspberry pi camera
@@ -40,21 +40,21 @@ def auto_camera(delay, vid_length, folder):
     camera.start_preview()
     sleep(2) 
     for i in range(vid_length*30):
-        if i < int(vid_length*30/2):
-            file_path = "/home/pi/sunrise300/" + folder + 'IMAGEA_' + '{0:04d}'.format(i)+".JPG"
-        else:
-            file_path = "/home/pi/sunrise300/" + folder + 'IMAGEB_' + '{0:04d}'.format(i)+".JPG"
+        file_path = "/home/pi/sunrise300/" + folder + 'IMAGE_' + '{0:04d}'.format(i)+".JPG"
         camera.capture(file_path)
         sleep(delay)
     camera.stop_preview()
     return True
 
-def ffmpeg_creation(folder):
-    filepathA = "/home/pi/sunrise300/" + folder + 'IMAGEA__%04d.JPG'
-    filepathA = "/home/pi/sunrise300/" + folder + 'IMAGEB__%04d.JPG'
+def ffmpeg_creation():
+    filepath = "/home/pi/sunrise300/images/IMAGE__%04d.JPG"
+    subprocess.call(f"/usr/local/bin/ffmpeg -y -r 30 -f image2 -start_number 0000 -i {filepath} -vcodec libx264 -preset slow -crf 17 timelapse.mp4", shell = True)
+    newfilename = strftime("%d-%B-%h-%m")+".mp4"
+    subprocess.call(f"mv timelapse.mp4 {newfilename}", shell = True)
 
-    subprocess.call(f"/usr/local/bin/ffmpeg -y -r 30 -f image2 -start_number 0000 -i {filepathA} -vcodec libx264 -preset slow -crf 17 timelapse-a.mp4", shell = True)
-    subprocess.call(f"/usr/local/bin/ffmpeg -y -r 30 -f image2 -start_number 0450 -i {filepathB} -vcodec libx264 -preset slow -crf 17 timelapse-a.mp4", shell = True)
+def scp_copy(filename, password, localpath):
+    subprocess.call(f"sshpass -p {password} scp {filename} {localpath}", shell = True)
+
 
 if __name__ == "__main__":
     sunrise, sunset = get_sunrise_and_sunset()
