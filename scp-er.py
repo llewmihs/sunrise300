@@ -4,7 +4,7 @@ from time import strftime
 
 def rename():
     filename = strftime("%d-%B-%h-%m") + ".mp4"
-    subprocess.call(f"mv /home/pi/sunrise300/timelapse.mp4 /home/pi/sunrise300/{filename}")
+    subprocess.call(f"mv /home/pi/sunrise300/timelapse.mp4 /home/pi/sunrise300/{filename}", shell = True)
     print("File renamed")
     return filename
 
