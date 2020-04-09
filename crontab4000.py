@@ -11,7 +11,7 @@ def start_time():
     s = sun(city.observer, date=datetime.date(datetime.now())+timedelta(days=1))
     sunrise_time = s['sunrise']   
     # timelapse shoudl start 1 hour prior
-    timelapse_start = sunrise_time # - timedelta(minutes=60)
+    timelapse_start = sunrise_time - timedelta(minutes=30)
     return timelapse_start
 
 def cron_update(timelapse_start):
