@@ -14,7 +14,7 @@ python3 camera4000.py
 python3 cropper4000.py
 
 # ffmpeg the files
-/usr/local/bin/ffmpeg -y -r 30 -f image2 -start_number 0000 -i /home/pi/sunrise300/IMAGE_%04d.JPG  -vcodec libx264 -preset slow -crf 17 timelapse.mp4
+/usr/local/bin/ffmpeg -y -r 30 -f image2 -start_number 0000 -i /home/pi/sunrise300/images/IMAGE_%04d.JPG  -vcodec libx264 -preset slow -crf 17 timelapse.mp4
 
 # update the crontab
 python3 crontab4000.py
