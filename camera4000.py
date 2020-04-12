@@ -50,3 +50,4 @@ if __name__ == "__main__":
     push = pb.push_note("A timelapse Has Started", f"Total frames: {total}. Delay: {delay}. FPS. 30")
     the_camera(total, delay)
     
+    
