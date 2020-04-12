@@ -5,7 +5,7 @@ from pushbullet import Pushbullet   # notification software to monitor the progr
 pb = Pushbullet(PUSHBULLET)
 
 def rename():
-    filename = strftime("%d-%B-%h-%m") + ".mp4"
+    filename = strftime("%d-%B-%H%M") + ".mp4"
     subprocess.call(f"mv /home/pi/sunrise300/timelapse.mp4 /home/pi/sunrise300/{filename}", shell = True)
     print("File renamed")
     return filename
