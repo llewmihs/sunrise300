@@ -45,7 +45,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         duration = int(sys.argv[1])
     else:
-        duration = 120ch
+        duration = 120
     total, delay = lapse_details(duration, 30)
     push = pb.push_note("A timelapse Has Started", f"Total frames: {total}. Delay: {delay}. FPS. 30")
     the_camera(total, delay)
